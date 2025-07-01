@@ -1,0 +1,982 @@
+:root {
+    --primary: #1e2a38;
+    --secondary: #2c3e50;
+    --accent: #3498db;
+    --accent-dark: #2980b9;
+    --light: #ecf0f1;
+    --dark: #0d1b2a;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --sidebar-width: 280px;
+    --header-height: 70px;
+    --transition-speed: 0.3s;
+    --border-radius: 8px;
+    --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--dark), #1a2a3a);
+    color: var(--light);
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: margin-left var(--transition-speed) ease;
+}
+
+/* Class to prevent body scrolling when sidebar is open */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Header Styles */
+header {
+    background-color: rgba(26, 37, 46, 0.95);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: var(--card-shadow);
+    transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Menu Toggle */
+.menu-toggle {
+    width: 30px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    z-index: 1051;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--light);
+    border-radius: 2px;
+    transition: all var(--transition-speed) ease;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--secondary);
+    position: fixed;
+    left: 0;
+    height: 100%;
+    padding-top: var(--header-height);
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+    transition: transform var(--transition-speed) ease;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    background-color: var(--primary);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1052;
+}
+
+.sidebar-controls {
+    display: flex;
+    gap: 15px;
+}
+
+.sidebar-controls i {
+    cursor: pointer;
+    color: var(--light);
+    font-size: 1.2rem;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.sidebar-controls i:hover {
+    color: var(--accent);
+}
+
+.sidebar-controls .fa-thumbtack.active {
+    color: var(--accent);
+    transform: rotate(45deg);
+}
+
+.sidebar-menu {
+    flex-grow: 1;
+    padding-top: 10px;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: var(--light);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.menu-item i {
+    margin-right: 15px;
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background-color: var(--primary);
+    color: var(--accent);
+}
+
+.menu-item:hover i,
+.menu-item.active i {
+    color: var(--accent);
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 995;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Pinned state styles */
+body.sidebar-pinned {
+    margin-left: var(--sidebar-width);
+    overflow-x: hidden;
+}
+
+body.sidebar-pinned .sidebar {
+    transform: translateX(0);
+    box-shadow: none;
+}
+
+body.sidebar-pinned header {
+    left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+}
+
+body.sidebar-pinned .menu-toggle {
+    display: none;
+}
+
+body.sidebar-pinned .sidebar-overlay {
+    display: none;
+}
+
+/* Main Content */
+main {
+    margin-top: var(--header-height);
+    padding: 25px;
+    transition: margin-left var(--transition-speed) ease;
+    min-height: calc(100vh - var(--header-height));
+}
+
+/* Page styles */
+.page {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.refresh-btn {
+    background-color: var(--accent);
+    color: var(--light);
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.refresh-btn:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+.refresh-btn i {
+    transition: transform 0.5s;
+}
+
+.refresh-btn:hover i {
+    transform: rotate(360deg);
+}
+
+/* Home Page */
+.home-content {
+    text-align: center;
+    padding: 50px 20px;
+    background: rgba(26, 37, 46, 0.6);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.welcome-text {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--light);
+    text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: var(--primary);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+.home-description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Live TV Page */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.video-container {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.video-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    background-color: #000; /* Black background for loading */
+}
+
+.video-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.loader-circle {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--accent);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.video-title {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--light);
+}
+
+.video-title .fa-circle {
+    color: var(--success);
+    font-size: 0.8rem;
+}
+
+/* Connections Page */
+.connections-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.social-platform {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.platform-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.platform-header i {
+    font-size: 2.5rem;
+    color: var(--accent); /* Default color, can be overridden for specific icons */
+}
+
+.platform-header h3 {
+    font-size: 1.8rem;
+    color: var(--light);
+    margin: 0;
+}
+
+.platform-description {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+.account-list {
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px; /* For scrollbar */
+}
+
+.account-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.account-item input[type="text"] {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--light);
+    font-size: 1rem;
+    padding: 5px 0;
+    outline: none;
+}
+
+.account-item .remove-btn {
+    background: var(--danger);
+    color: var(--light);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.account-item .remove-btn:hover {
+    background: var(--danger-dark);
+}
+
+.add-account {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Push to bottom */
+}
+
+.add-account input[type="text"] {
+    flex-grow: 1;
+    background-color: var(--primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 12px 15px;
+    color: var(--light);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.add-account input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.add-account input[type="text"]:focus {
+    border-color: var(--accent);
+}
+
+.add-account button {
+    background-color: var(--accent);
+    color: var(--light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.add-account button:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+.save-btn {
+    background-color: var(--accent);
+    color: var(--light);
+    padding: 15px 25px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 30px;
+    width: fit-content;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.save-btn:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+/* YouTube Posts Page */
+.posts-columns-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.posts-column {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.channel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.channel-header h2 {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.channel-header .fa-youtube {
+    color: #ff0000;
+}
+
+.view-channel {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--light);
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.view-channel:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.posts-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 500px; /* Adjust as needed */
+    padding-right: 10px; /* For scrollbar space */
+}
+
+.post-item {
+    background-color: var(--primary);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.post-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+}
+
+.post-author {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--accent);
+}
+
+.post-date {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.post-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--light);
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.post-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.post-stats span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post-stats i {
+    color: var(--accent);
+}
+
+/* Daily Darshan Page */
+.daily-darshan-container {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    height: calc(100vh - var(--header-height) - 100px); /* Adjust height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.daily-darshan-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+/* Social Media Page */
+.social-media-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.social-column {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 0px; /* Removed internal padding, social widget will control */
+    display: flex;
+    flex-direction: column;
+    min-height: 500px; /* Give it a minimum height */
+    overflow: hidden; /* Hide overflow from content */
+}
+
+.social-header {
+    padding: 25px;
+    background: rgba(52, 152, 219, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.social-header h2 {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.social-header .fa-facebook { color: #3b5998; }
+.social-header .fa-instagram { color: #e1306c; }
+.social-header .fa-twitter { color: #1da1f2; }
+
+/* Twitter Widget Fixes */
+.twitter-tweet {
+    margin: 0 auto !important;
+    max-width: 100% !important;
+}
+
+/* Ensure proper height for Twitter container */
+.social-widget {
+    min-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+/* Twitter Widget Fixes */
+.twitter-timeline {
+    width: 100% !important;
+    min-height: 500px;
+}
+
+/* Twitter container */
+#twitter-widget-container {
+    min-height: 500px;
+    overflow: hidden;
+}
+
+/* Error message styling */
+.error {
+    background: rgba(231, 76, 60, 0.2);
+    border: 1px solid var(--danger);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin: 20px;
+}
+
+.view-profile {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--light);
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.view-profile:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.social-widget {
+    flex: 1;
+    overflow-y: auto; /* Allow scrolling within the widget if content is too long */
+    display: flex; /* Use flexbox for inner content */
+    justify-content: center;
+    align-items: center; /* Center content vertically and horizontally */
+    padding: 20px; /* Add padding for the content inside */
+    position: relative; /* For loader or dynamic content */
+    height: 400px; /* Added this line to give the social widget a defined height */
+}
+
+.social-widget iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* General Error/Info Message Styling */
+.error {
+    background-color: var(--danger);
+    color: var(--light);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+}
+
+/* New Styles for YouTube Uploaded Videos Page */
+.youtube-channels-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.channel-select-btn {
+    background-color: var(--primary);
+    color: var(--light);
+    padding: 12px 25px;
+    border: 2px solid var(--primary);
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.channel-select-btn:hover {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+.channel-select-btn.active {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+.video-display-grid {
+    display: none; /* Hidden by default */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.video-display-grid.active {
+    display: grid; /* Show when active */
+}
+
+.youtube-video-item {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+}
+
+.youtube-video-item:hover {
+    transform: translateY(-5px);
+}
+
+.youtube-video-item img {
+    width: 100%;
+    height: 180px; /* Fixed height for thumbnails */
+    object-fit: cover;
+    display: block;
+}
+
+.youtube-video-item-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.youtube-video-item-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--light);
+    line-height: 1.4;
+    max-height: 3.2em; /* Approx 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.youtube-video-item-info p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+}
+
+.youtube-video-item-info a {
+    display: inline-block;
+    background-color: var(--accent);
+    color: var(--light);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    align-self: flex-start;
+    transition: background-color 0.2s;
+}
+
+.youtube-video-item-info a:hover {
+    background-color: var(--accent-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Always show menu toggle on smaller screens */
+    }
+
+    header {
+        justify-content: flex-start;
+        padding: 0 15px; /* Adjust padding for smaller screens */
+    }
+    .logo {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .sidebar {
+        width: 80%;
+        z-index: 1100;
+    }
+
+    body.sidebar-pinned {
+        margin-left: 0;
+    }
+
+    body.sidebar-pinned header {
+        left: 0;
+        width: 100%;
+    }
+
+    body.sidebar-pinned .menu-toggle {
+        display: flex;
+    }
+}
+
+@media (min-width: 769px) {
+    body.sidebar-pinned .menu-toggle {
+        display: none;
+    }
+}

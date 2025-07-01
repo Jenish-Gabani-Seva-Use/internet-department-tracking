@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet Department Tracking Software</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles_css.css">
+</head>
+
+<body>
+    <header>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo">Internet Department Tracking Software</div>
+    </header>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-controls">
+                <i class="fas fa-thumbtack" title="Pin sidebar"></i>
+                <i class="fas fa-times" title="Close sidebar"></i>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="menu-item" data-page="live-tv">
+                <i class="fas fa-tv"></i>
+                <span>Live TV</span>
+            </div>
+            <div class="menu-item" data-page="youtube-posts">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube Posts</span>
+            </div>
+            <div class="menu-item" data-page="youtube-videos">
+                <i class="fab fa-youtube-square"></i>
+                <span>YouTube Uploaded Videos</span>
+            </div>
+            <div class="menu-item" data-page="daily-darshan">
+                <i class="fas fa-image"></i>
+                <span>Website Daily Darshan</span>
+            </div>
+
+            <div class="menu-item" data-page="social-media">
+                <i class="fas fa-hashtag"></i>
+                <span>Social Media</span>
+            </div>
+            <div class="menu-item" data-page="audio-katha">
+                <i class="fas fa-volume-up"></i>
+                <span>Website Audio Katha</span>
+            </div>
+            <div class="menu-item" data-page="connections">
+                <i class="fas fa-plug"></i>
+                <span>Connections</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay"></div>
+
+    <main>
+        <div class="page active" id="home">
+            <div class="home-content">
+                <div class="welcome-text">Welcome to Internet Department Tracking</div>
+
+                <p class="home-description">
+                    The Internet Department Tracking Software provides comprehensive monitoring and management of all
+                    digital broadcasting activities.
+                    Access live streams, schedule events, and analyze performance metrics from a single dashboard.
+                </p>
+            </div>
+        </div>
+
+        <div class="page" id="live-tv">
+            <div class="page-header">
+                <h1 class="page-title">Live TV Channels</h1>
+                <div class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </div>
+            </div>
+            <div class="video-grid">
+                <div class="video-container">
+                    <div class="video-frame">
+                        <div class="loader">
+                            <div class="loader-circle"></div>
+                        </div>
+                    </div>
+                    <div class="video-title">
+                        <i class="fas fa-circle"></i>
+                        <span class="video-name">Loading channel...</span>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <div class="video-frame">
+                        <div class="loader">
+                            <div class="loader-circle"></div>
+                        </div>
+                    </div>
+                    <div class="video-title">
+                        <i class="fas fa-circle"></i>
+                        <span class="video-name">Loading channel...</span>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <div class="video-frame">
+                        <div class="loader">
+                            <div class="loader-circle"></div>
+                        </div>
+                    </div>
+                    <div class="video-title">
+                        <i class="fas fa-circle"></i>
+                        <span class="video-name">Loading channel...</span>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <div class="video-frame">
+                        <div class="loader">
+                            <div class="loader-circle"></div>
+                        </div>
+                    </div>
+                    <div class="video-title">
+                        <i class="fas fa-circle"></i>
+                        <span class="video-name">Loading channel...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="connections">
+            <div class="page-header">
+                <h1 class="page-title">Social Media Connections</h1>
+            </div>
+            <div class="connections-content">
+                <div class="social-platform">
+                    <div class="platform-header">
+                        <i class="fab fa-youtube"></i>
+                        <h3>YouTube Channels</h3>
+                    </div>
+                    <div class="platform-description">
+                        Add YouTube channel IDs to automatically fetch live streams
+                    </div>
+                    <div class="account-list" id="youtube-accounts">
+                    </div>
+                    <div class="add-account">
+                        <input type="text" id="youtube-input"
+                            placeholder="Enter YouTube channel ID (e.g. UC6VkhPuCCwR_kG0GExjoozg)">
+                        <button id="add-youtube"><i class="fas fa-plus"></i> Add Channel</button>
+                    </div>
+                </div>
+
+                <div class="social-platform">
+                    <div class="platform-header">
+                        <i class="fab fa-instagram"></i>
+                        <h3>Instagram Accounts</h3>
+                    </div>
+                    <div class="account-list" id="instagram-accounts">
+                        <div class="account-item">
+                            <input type="text" placeholder="Enter Instagram username" value="swaminarayan_official">
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="add-account">
+                        <input type="text" id="instagram-input" placeholder="Enter Instagram username">
+                        <button id="add-instagram"><i class="fas fa-plus"></i> Add Account</button>
+                    </div>
+                </div>
+
+                <div class="social-platform">
+                    <div class="platform-header">
+                        <i class="fab fa-facebook"></i>
+                        <h3>Facebook Pages</h3>
+                    </div>
+                    <div class="account-list" id="facebook-accounts">
+                        <div class="account-item">
+                            <input type="text" placeholder="Enter Facebook page ID" value="BAPSSwaminarayanSanstha">
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="add-account">
+                        <input type="text" id="facebook-input" placeholder="Enter Facebook page ID">
+                        <button id="add-facebook"><i class="fas fa-plus"></i> Add Page</button>
+                    </div>
+                </div>
+
+                <div class="social-platform">
+                    <div class="platform-header">
+                        <i class="fab fa-twitter"></i>
+                        <h3>Twitter Accounts</h3>
+                    </div>
+                    <div class="account-list" id="twitter-accounts">
+                        <div class="account-item">
+                            <input type="text" placeholder="Enter Twitter handle" value="BAPS">
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="add-account">
+                        <input type="text" id="twitter-input" placeholder="Enter Twitter handle">
+                        <button id="add-twitter"><i class="fas fa-plus"></i> Add Account</button>
+                    </div>
+                </div>
+
+                <button class="save-btn" id="save-connections">Save Connections</button>
+            </div>
+        </div>
+
+        <div class="page" id="youtube-posts">
+            <div class="page-header">
+                <h1 class="page-title">YouTube Posts</h1>
+            </div>
+            <div class="posts-columns-container">
+                <div class="posts-column">
+                    <div class="channel-header">
+                        <h2><i class="fab fa-youtube"></i> Swaminarayan Bhagwan</h2>
+                        <a href="https://www.youtube.com/@swaminarayanbhagwan1/community" target="_blank"
+                            class="view-channel">
+                            View Channel <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="posts-container" id="swaminarayan-bhagwan-posts">
+                    </div>
+                </div>
+
+                <div class="posts-column">
+                    <div class="channel-header">
+                        <h2><i class="fab fa-youtube"></i> Swaminarayan</h2>
+                        <a href="https://www.youtube.com/@swaminarayan/community" target="_blank" class="view-channel">
+                            View Channel <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="posts-container" id="swaminarayan-posts">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="youtube-videos">
+            <div class="page-header">
+                <h1 class="page-title">YouTube Uploaded Videos</h1>
+            </div>
+            <div class="youtube-channels-buttons">
+                <button class="channel-select-btn active" data-channel-name="swaminarayan-bhagwan">Swaminarayan
+                    Bhagwan</button>
+                <button class="channel-select-btn" data-channel-name="swaminarayan">Swaminarayan</button>
+            </div>
+            <div class="youtube-videos-content">
+                <div id="swaminarayan-bhagwan-videos" class="video-display-grid active">
+                </div>
+                <div id="swaminarayan-videos" class="video-display-grid">
+                </div>
+            </div>
+        </div>
+        <div class="page" id="daily-darshan">
+            <div class="page-header">
+                <h1 class="page-title">Website Daily Darshan</h1>
+            </div>
+            <div class="daily-darshan-container">
+                <iframe src="https://www.swaminarayanbhagwan.org/image-gallery/dailydarshan" frameborder="0"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="page" id="social-media">
+            <div class="page-header">
+                <h1 class="page-title">Social Media</h1>
+            </div>
+            <div class="social-media-container">
+                <div class="social-column">
+                    <div class="social-header">
+                        <h2><i class="fab fa-facebook"></i> Facebook</h2>
+                        <a href="https://www.facebook.com/swaminarayanbhagwan2/" target="_blank" class="view-profile">
+                            View Profile <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="social-widget" id="facebook-widget-container">
+                    </div>
+                </div>
+
+                <div class="social-column">
+                    <div class="social-header">
+                        <h2><i class="fab fa-instagram"></i> Instagram</h2>
+                        <a href="https://www.instagram.com/swaminarayanbhagwan_/" target="_blank" class="view-profile">
+                            View Profile <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="social-widget" id="instagram-widget-container">
+                    </div>
+                </div>
+
+                <div class="social-column">
+                    <div class="social-header">
+                        <h2><i class="fab fa-twitter"></i> Twitter</h2>
+                        <a href="https://x.com/ICC" target="_blank" class="view-profile">
+                            View Profile <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="social-widget" id="twitter-widget-container">
+                        <a class="twitter-timeline" href="https://twitter.com/ICC" data-width="100%"
+                            data-height="100%">Tweets by ICC</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page" id="audio-katha">
+            <div class="page-header">
+                <h1 class="page-title">Website Audio Katha</h1>
+            </div>
+            <div class="daily-darshan-container">
+                <iframe src="https://www.swaminarayanbhagwan.org/audio/all" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+
+    <script src="./script_js.js"></script>
+</body>
+
+</html>
