@@ -5,9 +5,9 @@ const pinBtn = document.querySelector('.fa-thumbtack');
 const closeBtn = document.querySelector('.fa-times');
 const menuItems = document.querySelectorAll('.menu-item');
 const pages = document.querySelectorAll('.page');
-const main = document.querySelector('main');
-const refreshBtn = document.querySelector('.refresh-btn');
-const saveBtn = document.getElementById('save-connections');
+const themeToggle = document.querySelector('.theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const themeOptions = document.querySelectorAll('.theme-option');
 const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
 // YouTube channel data
@@ -15,13 +15,8 @@ let youtubeChannels = [];
 const youtubeAccounts = document.getElementById('youtube-accounts');
 const youtubeInput = document.getElementById('youtube-input');
 const addYoutubeBtn = document.getElementById('add-youtube');
-
-// Pin state
-let isPinned = true; // Start as pinned by default
-
-// Flag to track if Twitter script has been loaded
-let twitterScriptPromise = null;
-let twitterScriptLoaded = false;
+const saveConnectionsBtn = document.getElementById('save-connections');
+const refreshBtn = document.querySelector('.refresh-btn');
 
 // YouTube Data API Key and Channel IDs
 const YOUTUBE_API_KEY = 'AIzaSyBLMT_7oFeo5xLWv_xQwil8wh3wmDsaZuM';
@@ -33,26 +28,39 @@ const CHANNEL_IDS = {
 // Pagination variables for YouTube videos
 let nextPageTokens = {};
 let currentLoadingChannel = null;
+let isPinned = true; // Track pin state
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        
+        // Update theme options
+        themeOptions[0].classList.remove('active');
+        themeOptions[1].classList.add('active');
+    }
+
+    // Load saved pin state
+  // Add this to DOMContentLoaded
+const savedPinState = localStorage.getItem('sidebarPinned');
+if (savedPinState === 'true') {
+    isPinned = true;
+    applyPinnedState();
+} else if (savedPinState === 'false') {
+    isPinned = false;
+    applyUnpinnedState();
+} else {
+    isPinned = true;
+    applyPinnedState();
+}
+
     // Load saved connections
     loadConnections();
-
-    // Load saved pin state from localStorage
-    const savedPinState = localStorage.getItem('sidebarPinned');
-    if (savedPinState === 'true') {
-        isPinned = true;
-        applyPinnedState();
-    } else if (savedPinState === 'false') {
-        isPinned = false;
-        applyUnpinnedState();
-        closeSidebar();
-    } else {
-        // First time load - default to pinned
-        isPinned = true;
-        applyPinnedState();
-    }
 
     // Set up event listeners
     setupEventListeners();
@@ -95,19 +103,33 @@ function setupEventListeners() {
         item.addEventListener('click', navigateToPage);
     });
 
+    // Theme toggle
+    themeToggle.addEventListener('click', toggleTheme);
+    
+    // Theme options
+    themeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const theme = option.getAttribute('data-theme');
+            setTheme(theme);
+            
+            // Update active state
+            themeOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+        });
+    });
+
     // Add YouTube channel
     addYoutubeBtn.addEventListener('click', addYoutubeChannel);
 
     // Save connections
-    saveBtn.addEventListener('click', saveConnections);
+    saveConnectionsBtn.addEventListener('click', saveConnections);
 
     // Refresh streams
-    refreshBtn.addEventListener('click', loadLiveStreams);
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', loadLiveStreams);
+    }
 
-    // Close sidebar when clicking outside (including the overlay)
-    sidebarOverlay.addEventListener('click', closeSidebar);
-
-    // General outside click for safety
+    // Close sidebar when clicking outside (only when unpinned)
     document.addEventListener('click', (event) => {
         const isClickInsideSidebar = sidebar.contains(event.target);
         const isClickOnMenuToggle = menuToggle.contains(event.target);
@@ -122,28 +144,33 @@ function setupEventListeners() {
 
     // Event listeners for YouTube channel selection buttons
     const channelSelectBtns = document.querySelectorAll('.channel-select-btn');
-    channelSelectBtns.forEach(button => {
-        button.addEventListener('click', function() {
-            const channelName = this.getAttribute('data-channel-name');
-            channelSelectBtns.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            document.querySelectorAll('.video-display-grid').forEach(container => {
-                container.classList.remove('active');
-            });
-            document.getElementById(`${channelName}-videos`).classList.add('active');
+    if (channelSelectBtns.length > 0) {
+        channelSelectBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const channelName = this.getAttribute('data-channel-name');
+                channelSelectBtns.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.video-display-grid').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.getElementById(`${channelName}-videos`).classList.add('active');
 
-            nextPageTokens[channelName] = null;
-            document.getElementById(`${channelName}-videos`).innerHTML = '';
-            currentLoadingChannel = channelName;
-            loadYouTubeUploadedVideos(channelName);
+                nextPageTokens[channelName] = null;
+                document.getElementById(`${channelName}-videos`).innerHTML = '';
+                currentLoadingChannel = channelName;
+                loadYouTubeUploadedVideos(channelName);
+            });
         });
-    });
+    }
 
     // Infinite scroll for YouTube videos
-    document.getElementById('youtube-videos').addEventListener('scroll', handleInfiniteScroll);
+    const youtubeVideosPage = document.getElementById('youtube-videos');
+    if (youtubeVideosPage) {
+        youtubeVideosPage.addEventListener('scroll', handleInfiniteScroll);
+    }
 }
 
-// Helper function to apply pinned state styles
+// Apply pinned state
 function applyPinnedState() {
     document.body.classList.add('sidebar-pinned');
     sidebar.classList.add('active');
@@ -154,7 +181,7 @@ function applyPinnedState() {
     localStorage.setItem('sidebarPinned', 'true');
 }
 
-// Helper function to apply unpinned state styles
+// Apply unpinned state
 function applyUnpinnedState() {
     document.body.classList.remove('sidebar-pinned');
     pinBtn.classList.remove('active');
@@ -162,20 +189,17 @@ function applyUnpinnedState() {
     localStorage.setItem('sidebarPinned', 'false');
 }
 
-// Toggle sidebar (for unpinned state)
+// Toggle sidebar
 function toggleSidebar() {
-    if (isPinned) {
-        // If pinned, menu toggle click should not hide the sidebar
-        return;
-    }
-
-    const isActive = sidebar.classList.contains('active');
-    if (isActive) {
+    if (isPinned) return;
+    
+    if (sidebar.classList.contains('active')) {
         closeSidebar();
     } else {
         openSidebar();
     }
 }
+
 
 // Open sidebar
 function openSidebar() {
@@ -197,7 +221,25 @@ function togglePinSidebar() {
     }
 }
 
-// Close sidebar (only applicable when not pinned)
+// Add these helper functions
+function applyPinnedState() {
+    document.body.classList.add('sidebar-pinned');
+    sidebar.classList.add('active');
+    pinBtn.classList.add('active');
+    pinBtn.style.transform = 'rotate(45deg)';
+    sidebarOverlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+    localStorage.setItem('sidebarPinned', 'true');
+}
+
+function applyUnpinnedState() {
+    document.body.classList.remove('sidebar-pinned');
+    pinBtn.classList.remove('active');
+    pinBtn.style.transform = 'rotate(0)';
+    localStorage.setItem('sidebarPinned', 'false');
+}
+
+// Close sidebar
 function closeSidebar() {
     if (!isPinned) {
         sidebar.classList.remove('active');
@@ -231,6 +273,8 @@ function navigateToPage() {
         // The iframe will load automatically
     } else if (pageId === 'social-media') {
         loadSocialMediaWidgets();
+    } else if (pageId === 'connections') {
+        // Connections page doesn't need special handling
     }
 
     // Close sidebar only if it's not pinned
@@ -239,77 +283,39 @@ function navigateToPage() {
     }
 }
 
-// New function to load all social media widgets
-function loadSocialMediaWidgets() {
-    try {
-        loadFacebookWidget();
-        loadInstagramWidget();
-        setTimeout(loadTwitterWidget, 500);
-    } catch (error) {
-        console.error("Social media load error:", error);
+// Toggle theme
+function toggleTheme() {
+    if (document.body.classList.contains('dark-theme')) {
+        setTheme('light');
+        themeOptions[0].classList.remove('active');
+        themeOptions[1].classList.add('active');
+    } else {
+        setTheme('dark');
+        themeOptions[1].classList.remove('active');
+        themeOptions[0].classList.add('active');
     }
 }
 
-// Load Facebook widget
-function loadFacebookWidget() {
-    const facebookContainer = document.getElementById('facebook-widget-container');
-    if (!facebookContainer) return;
-    facebookContainer.innerHTML = '';
-
-    const iframe = document.createElement('iframe');
-    iframe.src = "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fswaminarayanbhagwan2%2F&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId";
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.frameBorder = '0';
-    iframe.allowTransparency = 'true';
-    iframe.allow = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
-    facebookContainer.appendChild(iframe);
-}
-
-// Load Instagram widget
-function loadInstagramWidget() {
-    const container = document.getElementById('instagram-widget-container');
-    if (!container) return;
-
-    container.innerHTML = `
-    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/CrYenF0vL3n/"
-        data-instgrm-version="14"
-        style="width:100%; height:500px;">
-    </blockquote>
-    <script async src="https://www.instagram.com/embed.js"></script>`;
-}
-
-// Load Twitter widget
-function loadTwitterWidget() {
-    const twitterContainer = document.getElementById('twitter-widget-container');
-    if (!twitterContainer) return;
-
-    twitterContainer.innerHTML = '<div class="loader"><div class="loader-circle"></div></div>';
-
-    const twitterTimeline = document.createElement('a');
-    twitterTimeline.className = 'twitter-timeline';
-    twitterTimeline.href = 'https://x.com/TheCensorTalk';
-    twitterTimeline.textContent = 'Tweets by TheCensorTalk';
-    twitterTimeline.setAttribute('data-width', '100%');
-    twitterTimeline.setAttribute('data-height', '500');
-    twitterTimeline.setAttribute('data-dnt', 'true');
-    twitterTimeline.setAttribute('data-chrome', 'noheader nofooter');
-    twitterTimeline.setAttribute('data-tweet-limit', '5');
-    twitterTimeline.setAttribute('data-theme', 'dark');
-    twitterContainer.appendChild(twitterTimeline);
-
-    const script = document.createElement('script');
-    script.src = 'https://platform.twitter.com/widgets.js';
-    script.async = true;
-    script.onload = () => {
-        if (window.twttr && window.twttr.widgets) {
-            window.twttr.widgets.load(twitterContainer);
-        }
-    };
-    script.onerror = () => {
-        twitterContainer.innerHTML = '<div class="error">Failed to load Twitter feed. Please check your internet connection.</div>';
-    };
-    document.body.appendChild(script);
+// Set theme
+function setTheme(theme) {
+    if (theme === 'light') {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'dark');
+    }
+    
+    // Re-load Twitter widget to apply new theme if on social media page
+    if (document.getElementById('social-media').classList.contains('active')) {
+        loadTwitterWidget();
+    }
 }
 
 // Add YouTube channel
@@ -349,12 +355,15 @@ function renderYoutubeAccounts() {
 function saveConnections() {
     localStorage.setItem('youtubeChannels', JSON.stringify(youtubeChannels));
 
-    saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved Successfully!';
-    saveBtn.style.background = 'var(--success)';
+    saveConnectionsBtn.innerHTML = '<i class="fas fa-check"></i> Saved Successfully!';
+    saveConnectionsBtn.style.background = 'var(--success-dark)';
+    if (document.body.classList.contains('light-theme')) {
+        saveConnectionsBtn.style.background = 'var(--success-light)';
+    }
 
     setTimeout(() => {
-        saveBtn.innerHTML = 'Save Connections';
-        saveBtn.style.background = 'var(--accent)';
+        saveConnectionsBtn.innerHTML = 'Save Connections';
+        saveConnectionsBtn.style.background = '';
     }, 2000);
 }
 
@@ -402,6 +411,7 @@ function loadLiveStreams() {
                             frameborder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 `;
                 nameElement.textContent = stream.title;
+                nameElement.previousElementSibling.className = 'fas fa-circle online';
             }
         });
     }, 500);
@@ -422,7 +432,7 @@ function loadYouTubePosts() {
         <div class="error" style="text-align: center; padding: 20px;">
             <p style="margin-bottom: 10px;">YouTube community posts are not directly embeddable via simple iframes.</p>
             <p>Please visit the community tab directly:</p>
-            <a href="${bhagwanChannelUrl}" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">
+            <a href="${bhagwanChannelUrl}" target="_blank" style="color: var(--accent-dark); text-decoration: none; font-weight: bold;">
                 Swaminarayan Bhagwan Community <i class="fas fa-external-link-alt"></i>
             </a>
         </div>
@@ -432,13 +442,11 @@ function loadYouTubePosts() {
         <div class="error" style="text-align: center; padding: 20px;">
             <p style="margin-bottom: 10px;">YouTube community posts are not directly embeddable via simple iframes.</p>
             <p>Please visit the community tab directly:</p>
-            <a href="${swaminarayanChannelUrl}" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: bold;">
+            <a href="${swaminarayanChannelUrl}" target="_blank" style="color: var(--accent-dark); text-decoration: none; font-weight: bold;">
                 Swaminarayan Community <i class="fas fa-external-link-alt"></i>
             </a>
         </div>
     `;
-
-    console.warn("Note: Direct iframe embedding for YouTube community posts is generally not supported.");
 }
 
 // Function to fetch and display YouTube uploaded videos
@@ -519,7 +527,7 @@ async function loadYouTubeUploadedVideos(channelName) {
         if (error.message.includes('Quota exceeded')) {
             errorMessage = 'YouTube API daily quota exceeded. Please try again tomorrow.';
         } else if (error.message.includes('Invalid API key')) {
-            errorMessage = 'Invalid YouTube API Key. Please check your key in script_js.js.';
+            errorMessage = 'Invalid YouTube API Key. Please check your key in script.js.';
         } else if (error.message.includes('Forbidden')) {
             errorMessage = 'Access to YouTube API forbidden. Check API key restrictions or channel privacy.';
         }
@@ -567,6 +575,7 @@ function renderYouTubeVideos(containerId, videos, videoStats) {
             container.appendChild(videoItem);
         });
     } else if (nextPageTokens[containerId.replace('-videos', '')] === null) {
+        // If no more videos and next page token is null, indicate end of content
         if (!container.querySelector('.no-more-videos-message')) {
             const noMoreVideosDiv = document.createElement('div');
             noMoreVideosDiv.className = 'error no-more-videos-message';
@@ -578,36 +587,37 @@ function renderYouTubeVideos(containerId, videos, videoStats) {
     }
 }
 
-// Helper function to format numbers
+// Helper function to format large numbers
 function formatNumber(num) {
+    num = Number(num);
+    if (isNaN(num)) return 'N/A';
+
     if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
     if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-    return num;
+    return num.toString();
 }
 
 // Helper function to calculate time ago
 function timeAgo(date) {
     const seconds = Math.floor((new Date() - date) / 1000);
-    let interval = seconds / 31536000;
+    let interval = seconds / 31536000; // Years
     if (interval > 1) return Math.floor(interval) + " years ago";
-    interval = seconds / 2592000;
+    interval = seconds / 2592000; // Months
     if (interval > 1) return Math.floor(interval) + " months ago";
-    interval = seconds / 86400;
+    interval = seconds / 86400; // Days
     if (interval > 1) return Math.floor(interval) + " days ago";
-    interval = seconds / 3600;
+    interval = seconds / 3600; // Hours
     if (interval > 1) return Math.floor(interval) + " hours ago";
-    interval = seconds / 60;
+    interval = seconds / 60; // Minutes
     if (interval > 1) return Math.floor(interval) + " minutes ago";
     return Math.floor(seconds) + " seconds ago";
 }
 
-// Handle infinite scrolling
+// Function to handle infinite scroll
 function handleInfiniteScroll() {
     const youtubeVideosPage = document.getElementById('youtube-videos');
-    if (!youtubeVideosPage) return;
-
-    if (!youtubeVideosPage.classList.contains('active')) {
+    if (!youtubeVideosPage || !youtubeVideosPage.classList.contains('active')) {
         return;
     }
 
@@ -621,4 +631,89 @@ function handleInfiniteScroll() {
         youtubeVideosPage.dataset.loading = 'true';
         loadYouTubeUploadedVideos(currentLoadingChannel);
     }
+}
+
+// Function to load social media widgets
+function loadSocialMediaWidgets() {
+    try {
+        loadFacebookWidget();
+        loadInstagramWidget();
+        setTimeout(loadTwitterWidget, 500);
+    } catch (error) {
+        console.error("Social media load error:", error);
+    }
+}
+
+// Function to load Facebook widget
+function loadFacebookWidget() {
+    const facebookContainer = document.getElementById('facebook-widget-container');
+    if (!facebookContainer) return;
+    facebookContainer.innerHTML = '';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fswaminarayanbhagwan2%2F&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId";
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.frameBorder = '0';
+    iframe.allowTransparency = 'true';
+    iframe.allow = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+    facebookContainer.appendChild(iframe);
+}
+
+// Function to load Instagram widget
+function loadInstagramWidget() {
+    const container = document.getElementById('instagram-widget-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'instagram-media';
+    blockquote.setAttribute('data-instgrm-permalink', 'https://www.instagram.com/p/CrYenF0vL3n/');
+    blockquote.setAttribute('data-instgrm-version', '14');
+    blockquote.style.width = '100%';
+    blockquote.style.height = '500px';
+    container.appendChild(blockquote);
+
+    // Create and append the Instagram script
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.instagram.com/embed.js';
+    document.body.appendChild(script);
+}
+
+// Function to load Twitter widget
+function loadTwitterWidget() {
+    const twitterContainer = document.getElementById('twitter-widget-container');
+    if (!twitterContainer) return;
+
+    twitterContainer.innerHTML = '<div class="loader"><div class="loader-circle"></div></div>';
+
+    const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+
+    // Remove any existing Twitter script
+    const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+    if (existingScript) {
+        existingScript.remove();
+    }
+
+    // Create Twitter timeline element
+    twitterContainer.innerHTML = '';
+    const twitterTimeline = document.createElement('a');
+    twitterTimeline.className = 'twitter-timeline';
+    twitterTimeline.href = 'https://x.com/TheCensorTalk';
+    twitterTimeline.textContent = 'Tweets by TheCensorTalk';
+    twitterTimeline.setAttribute('data-width', '100%');
+    twitterTimeline.setAttribute('data-height', '500');
+    twitterTimeline.setAttribute('data-dnt', 'true');
+    twitterTimeline.setAttribute('data-chrome', 'noheader nofooter transparent');
+    twitterTimeline.setAttribute('data-tweet-limit', '5');
+    twitterTimeline.setAttribute('data-theme', currentTheme);
+    twitterContainer.appendChild(twitterTimeline);
+
+    // Create and append Twitter script
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
 }
