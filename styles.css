@@ -591,7 +591,9 @@ body.light-theme .video-title {
 }
 
 /* ====== CONNECTIONS PAGE STYLES ====== */
-.connections-content {}
+.connections-content {
+    /* replaced by .redesigned-connections */
+}
 
 .redesigned-connections {
     display: flex;

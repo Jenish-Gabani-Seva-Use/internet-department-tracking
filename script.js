@@ -2,7 +2,7 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const sidebar = document.querySelector('.sidebar');
 const pinBtn = document.querySelector('.fa-thumbtack');
-const closeBtn = document.querySelector('.sidebar-close-btn');
+// const closeBtn = document.querySelector('.sidebar-close-btn');
 const menuItems = document.querySelectorAll('.menu-item');
 const pages = document.querySelectorAll('.page');
 const themeToggle = document.querySelector('.theme-toggle');
@@ -125,8 +125,7 @@ function setupEventListeners() {
     // Pin sidebar functionality
     pinBtn.addEventListener('click', togglePinSidebar);
 
-    // Close sidebar using the 'X' button
-    closeBtn.addEventListener('click', closeSidebar);
+
 
     // Page navigation
     menuItems.forEach(item => {
@@ -166,8 +165,9 @@ function setupEventListeners() {
     document.addEventListener('click', (event) => {
         const isClickInsideSidebar = sidebar.contains(event.target);
         const isClickOnMenuToggle = menuToggle.contains(event.target);
-        const isClickOnCloseBtn = closeBtn.contains(event.target);
         const isClickOnPinBtn = pinBtn.contains(event.target);
+        // No closeBtn anymore
+        const isClickOnCloseBtn = false;
 
         if (!isClickInsideSidebar && !isClickOnMenuToggle && !isClickOnCloseBtn && !isClickOnPinBtn &&
             sidebar.classList.contains('active') && !isPinned) {
@@ -203,8 +203,16 @@ function applyPinnedState() {
     sidebar.classList.add('active');
     pinBtn.classList.add('active');
     pinBtn.style.transform = 'rotate(45deg)';
+    // Always remove overlay and no-scroll when pinning
     sidebarOverlay.classList.remove('active');
+    sidebarOverlay.style.opacity = '';
+    sidebarOverlay.style.visibility = '';
     document.body.classList.remove('no-scroll');
+    // Remove pointer-events from overlay in case it was left enabled
+    sidebarOverlay.style.pointerEvents = '';
+    // Also ensure main is clickable
+    const main = document.querySelector('main');
+    if (main) main.style.pointerEvents = '';
     localStorage.setItem('sidebarPinned', 'true');
 }
 
@@ -214,6 +222,9 @@ function applyUnpinnedState() {
     pinBtn.classList.remove('active');
     pinBtn.style.transform = 'rotate(0)';
     localStorage.setItem('sidebarPinned', 'false');
+    // When unpinned, overlay may be used, so reset pointer-events for main
+    const main = document.querySelector('main');
+    if (main) main.style.pointerEvents = '';
 }
 
 // Toggle sidebar
