@@ -1,13 +1,13 @@
-Folder listing for: C:\Users\Graphics2\Downloads\Internet Department Tracking\ 
-Generated on: 01-07-2025 19:25:37.01 
+Folder listing for: C:\Users\gaban\Downloads\Compressed\internet-department-tracking-main\ 
+Generated on: 02-07-2025 22:40:48.68 
  
 ===== FOLDER TREE ===== 
 \
     [IGNORED] Backup\
     Folder Structure & Cotnent In One Text File.bat
-    index_html.html
-    script_js.js
-    styles_css.css
+    index.html
+    script.js
+    styles.css
 ===== END OF TREE ===== 
  
 ===== FILE CONTENTS ===== 
@@ -204,7 +204,7 @@ END OF FILE: Folder Structure & Cotnent In One Text File.bat
 ================================================= 
  
 ================================================= 
-FILE: index_html.html 
+FILE: index.html 
 ================================================= 
  
 <!DOCTYPE html>
@@ -212,27 +212,31 @@ FILE: index_html.html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet Department Tracking Software</title>
+    <title>Internet & Social Media Department Tracking Software</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./styles_css.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
-    <!-- Header -->
+<body class="dark-theme">
     <header>
         <div class="menu-toggle">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <div class="logo">Internet Department Tracking</div>
+        <div class="logo">
+            <i class="fas fa-broadcast-tower"></i>
+            <span>Internet & Social Media Department Tracker</span>
+        </div>
+        <div class="theme-toggle">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </div>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-controls">
                 <i class="fas fa-thumbtack" title="Pin sidebar"></i>
-                <i class="fas fa-times" title="Close sidebar"></i>
             </div>
         </div>
         <div class="sidebar-menu">
@@ -244,57 +248,85 @@ FILE: index_html.html
                 <i class="fas fa-tv"></i>
                 <span>Live TV</span>
             </div>
+            <div class="menu-item" data-page="youtube-posts">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube Posts</span>
+            </div>
+            <div class="menu-item" data-page="youtube-videos">
+                <i class="fab fa-youtube-square"></i>
+                <span>YouTube Videos</span>
+            </div>
+            <div class="menu-item" data-page="daily-darshan">
+                <i class="fas fa-image"></i>
+                <span>Daily Darshan</span>
+            </div>
+            <div class="menu-item" data-page="social-media">
+                <i class="fas fa-hashtag"></i>
+                <span>Social Media</span>
+            </div>
+            <div class="menu-item" data-page="social-media-extra">
+                <i class="fas fa-share-alt"></i>
+                <span>Social Archive</span>
+            </div>
+            <div class="menu-item" data-page="audio-katha">
+                <i class="fas fa-volume-up"></i>
+                <span>Audio Katha</span>
+            </div>
+            <!--
             <div class="menu-item" data-page="connections">
                 <i class="fas fa-plug"></i>
                 <span>Connections</span>
             </div>
-            <div class="menu-item">
-                <i class="fas fa-broadcast-tower"></i>
-                <span>Broadcasts</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Events Schedule</span>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-chart-line"></i>
-                <span>Analytics</span>
-            </div>
-            <div class="menu-item">
+            -->
+            <div class="menu-item" data-page="settings">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
             </div>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <div class="sidebar-overlay"></div>
+
     <main>
-        <!-- Home Page -->
+        <!-- Dashboard Page -->
         <div class="page active" id="home">
             <div class="home-content">
                 <div class="welcome-text">Welcome to Internet Department Tracking</div>
+                <p class="home-description">
+                    The Internet Department Tracking Software provides comprehensive monitoring and management of all
+                    digital broadcasting activities. Access live streams, schedule events, and analyze performance metrics.
+                </p>
+                
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value">24</div>
+                        <div class="stat-value">4</div>
                         <div class="stat-label">Live Channels</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value">1.2M</div>
-                        <div class="stat-label">Monthly Views</div>
+                        <div class="stat-value">128</div>
+                        <div class="stat-label">YouTube Videos</div>
+                        <div class="stat-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2.4K</div>
+                        <div class="stat-label">Social Posts</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">98%</div>
                         <div class="stat-label">Uptime</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">36</div>
-                        <div class="stat-label">Upcoming Events</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                     </div>
                 </div>
-                <p class="home-description">
-                    The Internet Department Tracking Software provides comprehensive monitoring and management of all digital broadcasting activities. 
-                    Access live streams, schedule events, and analyze performance metrics from a single dashboard.
-                </p>
             </div>
         </div>
 
@@ -307,6 +339,7 @@ FILE: index_html.html
                 </div>
             </div>
             <div class="video-grid">
+                <!-- Video containers will be populated by JavaScript -->
                 <div class="video-container">
                     <div class="video-frame">
                         <div class="loader">
@@ -360,6 +393,7 @@ FILE: index_html.html
                 <h1 class="page-title">Social Media Connections</h1>
             </div>
             <div class="connections-content">
+                <!-- YouTube Connections -->
                 <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-youtube"></i>
@@ -369,14 +403,16 @@ FILE: index_html.html
                         Add YouTube channel IDs to automatically fetch live streams
                     </div>
                     <div class="account-list" id="youtube-accounts">
-                        <!-- Accounts will be added here dynamically -->
+                        <!-- Accounts will be populated by JavaScript -->
                     </div>
                     <div class="add-account">
-                        <input type="text" id="youtube-input" placeholder="Enter YouTube channel ID (e.g. UC6VkhPuCCwR_kG0GExjoozg)">
+                        <input type="text" id="youtube-input"
+                            placeholder="Enter YouTube channel ID (e.g. UC6VkhPuCCwR_kG0GExjoozg)">
                         <button id="add-youtube"><i class="fas fa-plus"></i> Add Channel</button>
                     </div>
                 </div>
-                
+
+                <!-- Instagram Connections -->
                 <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-instagram"></i>
@@ -384,7 +420,8 @@ FILE: index_html.html
                     </div>
                     <div class="account-list" id="instagram-accounts">
                         <div class="account-item">
-                            <input type="text" placeholder="Enter Instagram username" value="swaminarayan_official">
+                            <input type="text" placeholder="Enter Instagram username" value="swaminarayan_official"
+                                readonly>
                             <button class="remove-btn"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
@@ -393,7 +430,8 @@ FILE: index_html.html
                         <button id="add-instagram"><i class="fas fa-plus"></i> Add Account</button>
                     </div>
                 </div>
-                
+
+                <!-- Facebook Connections -->
                 <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-facebook"></i>
@@ -401,7 +439,8 @@ FILE: index_html.html
                     </div>
                     <div class="account-list" id="facebook-accounts">
                         <div class="account-item">
-                            <input type="text" placeholder="Enter Facebook page ID" value="BAPSSwaminarayanSanstha">
+                            <input type="text" placeholder="Enter Facebook page ID" value="BAPSSwaminarayanSanstha"
+                                readonly>
                             <button class="remove-btn"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
@@ -410,7 +449,8 @@ FILE: index_html.html
                         <button id="add-facebook"><i class="fas fa-plus"></i> Add Page</button>
                     </div>
                 </div>
-                
+
+                <!-- Twitter Connections -->
                 <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-twitter"></i>
@@ -418,7 +458,7 @@ FILE: index_html.html
                     </div>
                     <div class="account-list" id="twitter-accounts">
                         <div class="account-item">
-                            <input type="text" placeholder="Enter Twitter handle" value="BAPS">
+                            <input type="text" placeholder="Enter Twitter handle" value="TheCensorTalk" readonly>
                             <button class="remove-btn"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
@@ -427,21 +467,238 @@ FILE: index_html.html
                         <button id="add-twitter"><i class="fas fa-plus"></i> Add Account</button>
                     </div>
                 </div>
-                
+
                 <button class="save-btn" id="save-connections">Save Connections</button>
+            </div>
+        </div>
+
+        <!-- YouTube Posts Page -->
+        <div class="page" id="youtube-posts">
+            <div class="page-header">
+                <h1 class="page-title">YouTube Posts</h1>
+            </div>
+            <div class="posts-columns-container">
+                <div class="posts-column">
+                    <div class="channel-header">
+                        <h2><i class="fab fa-youtube"></i> Swaminarayan Bhagwan</h2>
+                        <a href="https://www.youtube.com/channel/UCQXWP4gEdEwlb6vodwrU75A/community" target="_blank"
+                            class="view-channel">
+                            View Channel <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="posts-container" id="swaminarayan-bhagwan-posts">
+                        <!-- Posts will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="posts-column">
+                    <div class="channel-header">
+                        <h2><i class="fab fa-youtube"></i> Swaminarayan</h2>
+                        <a href="https://www.youtube.com/channel/UC7HQ3mzdsyvLU0Y7a2t3N7A/community" target="_blank"
+                            class="view-channel">
+                            View Channel <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="posts-container" id="swaminarayan-posts">
+                        <!-- Posts will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YouTube Videos Page -->
+        <div class="page" id="youtube-videos">
+            <div class="page-header">
+                <h1 class="page-title">YouTube Uploaded Videos</h1>
+            </div>
+            <div class="youtube-channels-buttons">
+                <button class="channel-select-btn active" data-channel-name="swaminarayan-bhagwan">Swaminarayan
+                    Bhagwan</button>
+                <button class="channel-select-btn" data-channel-name="swaminarayan">Swaminarayan</button>
+            </div>
+            <div class="youtube-videos-content">
+                <div id="swaminarayan-bhagwan-videos" class="video-display-grid active">
+                    <!-- Videos will be populated by JavaScript -->
+                </div>
+                <div id="swaminarayan-videos" class="video-display-grid">
+                    <!-- Videos will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Daily Darshan Page -->
+        <div class="page" id="daily-darshan">
+            <div class="page-header">
+                <h1 class="page-title">Website Daily Darshan</h1>
+            </div>
+            <div class="daily-darshan-container">
+                <iframe src="https://www.swaminarayanbhagwan.org/image-gallery/dailydarshan" frameborder="0"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Social Media Page -->
+        <div class="page" id="social-media">
+            <div class="page-header">
+                <h1 class="page-title">Social Media</h1>
+            </div>
+            <div class="social-media-container">
+                <div class="social-column">
+                    <div class="social-header">
+                        <h2><i class="fab fa-facebook"></i> Facebook</h2>
+                        <a href="https://www.facebook.com/swaminarayanbhagwan2/" target="_blank" class="view-profile">
+                            View Profile <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="social-widget" id="facebook-widget-container">
+                        <!-- Facebook widget will be loaded by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="social-column">
+                    <div class="social-header">
+                        <h2><i class="fab fa-instagram"></i> Instagram</h2>
+                        <a href="https://www.instagram.com/swaminarayanbhagwan_/" target="_blank" class="view-profile">
+                            View Profile <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="social-widget" id="instagram-widget-container">
+                        <!-- Instagram widget will be loaded by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="social-column">
+                    <div class="social-header">
+                        <h2><i class="fab fa-twitter"></i> X (Twitter)</h2>
+                        <a href="https://x.com/TheCensorTalk" target="_blank" class="view-profile">
+                            View Profile <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="social-widget" id="twitter-widget-container">
+                        <!-- Twitter widget will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Audio Katha Page -->
+        <div class="page" id="audio-katha">
+            <div class="page-header">
+                <h1 class="page-title">Website Audio Katha</h1>
+            </div>
+            <div class="daily-darshan-container">
+                <iframe src="https://www.swaminarayanbhagwan.org/audio/all" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <!-- Social Media Archive Page -->
+        <div class="page" id="social-media-extra">
+            <div class="page-header">
+                <h1 class="page-title">Social Media Archive</h1>
+            </div>
+            <div class="daily-darshan-container">
+                <iframe src="https://www.swaminarayanbhagwan.org/socialmedia" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <!-- Settings Page -->
+        <div class="page" id="settings">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+            </div>
+            
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h2><i class="fas fa-palette"></i> Appearance</h2>
+                    <div class="appearance-options">
+                        <div class="theme-option active" data-theme="dark">
+                            <div class="theme-preview dark-theme-preview">
+                                <div class="preview-header"></div>
+                                <div class="preview-sidebar"></div>
+                                <div class="preview-content"></div>
+                            </div>
+                            <span>Dark Mode</span>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <div class="theme-preview light-theme-preview">
+                                <div class="preview-header"></div>
+                                <div class="preview-sidebar"></div>
+                                <div class="preview-content"></div>
+                            </div>
+                            <span>Light Mode</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h2><i class="fas fa-sliders-h"></i> Preferences</h2>
+                    <div class="preference-option">
+                        <label class="switch">
+                            <input type="checkbox" id="auto-refresh" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <h3>Auto-refresh content</h3>
+                            <p>Automatically refresh content every 5 minutes</p>
+                        </div>
+                    </div>
+                    <div class="preference-option">
+                        <label class="switch">
+                            <input type="checkbox" id="notifications">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="preference-info">
+                            <h3>Notifications</h3>
+                            <p>Enable desktop notifications</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h2><i class="fas fa-user-cog"></i> Account Settings</h2>
+                    <div class="account-settings">
+                        <div class="avatar-upload">
+                            <div class="avatar-preview">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <button class="upload-btn">Change Avatar</button>
+                        </div>
+                        <div class="account-form">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" value="Admin User">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" value="admin@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select>
+                                    <option>Administrator</option>
+                                    <option>Editor</option>
+                                    <option>Viewer</option>
+                                </select>
+                            </div>
+                            <button class="save-btn">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <script src="./script_js.js"></script>
+    <div class="notification-container"></div>
+    
+    <script src="./script.js"></script>
 </body>
 </html> 
 ================================================= 
-END OF FILE: index_html.html 
+END OF FILE: index.html 
 ================================================= 
  
 ================================================= 
-FILE: script_js.js 
+FILE: script.js 
 ================================================= 
  
 // DOM Elements
@@ -451,116 +708,323 @@ const pinBtn = document.querySelector('.fa-thumbtack');
 const closeBtn = document.querySelector('.fa-times');
 const menuItems = document.querySelectorAll('.menu-item');
 const pages = document.querySelectorAll('.page');
-const main = document.querySelector('main');
-const refreshBtn = document.querySelector('.refresh-btn');
-const saveBtn = document.getElementById('save-connections');
+const themeToggle = document.querySelector('.theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const themeOptions = document.querySelectorAll('.theme-option');
+const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
 // YouTube channel data
 let youtubeChannels = [];
 const youtubeAccounts = document.getElementById('youtube-accounts');
 const youtubeInput = document.getElementById('youtube-input');
 const addYoutubeBtn = document.getElementById('add-youtube');
+const saveConnectionsBtn = document.getElementById('save-connections');
+const refreshBtn = document.querySelector('.refresh-btn');
 
-// Pin state
-let isPinned = false;
+// YouTube Data API Key and Channel IDs
+const YOUTUBE_API_KEY = 'AIzaSyBLMT_7oFeo5xLWv_xQwil8wh3wmDsaZuM';
+const CHANNEL_IDS = {
+    'swaminarayan-bhagwan': 'UCQXWP4gEdEwlb6vodwrU75A',
+    'swaminarayan': 'UC7HQ3mzdsyvLU0Y7a2t3N7A'
+};
+
+// Pagination variables for YouTube videos
+let nextPageTokens = {};
+let currentLoadingChannel = null;
+let isPinned = true; // Track pin state
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        
+        // Update theme options
+        themeOptions[0].classList.remove('active');
+        themeOptions[1].classList.add('active');
+    }
+
+    // Load saved pin state
+  // Add this to DOMContentLoaded
+const savedPinState = localStorage.getItem('sidebarPinned');
+if (savedPinState === 'true') {
+    isPinned = true;
+    applyPinnedState();
+} else if (savedPinState === 'false') {
+    isPinned = false;
+    applyUnpinnedState();
+} else {
+    isPinned = true;
+    applyPinnedState();
+}
+
     // Load saved connections
     loadConnections();
-    
+
     // Set up event listeners
     setupEventListeners();
-    
-    // Load live streams
-    loadLiveStreams();
+
+    // Load initial content based on the active page
+    const activePage = document.querySelector('.page.active');
+    if (activePage) {
+        const activePageId = activePage.id;
+        if (activePageId === 'youtube-posts') {
+            loadYouTubePosts();
+        } else if (activePageId === 'live-tv') {
+            loadLiveStreams();
+        } else if (activePageId === 'social-media') {
+            loadSocialMediaWidgets();
+        } else if (activePageId === 'youtube-videos') {
+            const defaultChannelButton = document.querySelector('.channel-select-btn[data-channel-name="swaminarayan-bhagwan"]');
+            if (defaultChannelButton) {
+                defaultChannelButton.classList.add('active');
+                document.getElementById('swaminarayan-bhagwan-videos').classList.add('active');
+                currentLoadingChannel = 'swaminarayan-bhagwan';
+                loadYouTubeUploadedVideos('swaminarayan-bhagwan');
+            }
+        }
+    }
 });
 
 // Set up event listeners
 function setupEventListeners() {
     // Toggle sidebar
     menuToggle.addEventListener('click', toggleSidebar);
-    
+
     // Pin sidebar functionality
     pinBtn.addEventListener('click', togglePinSidebar);
-    
-    // Close sidebar
+
+    // Close sidebar using the 'X' button
     closeBtn.addEventListener('click', closeSidebar);
-    
+
     // Page navigation
     menuItems.forEach(item => {
         item.addEventListener('click', navigateToPage);
     });
+
+    // Theme toggle
+    themeToggle.addEventListener('click', toggleTheme);
     
+    // Theme options
+    themeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const theme = option.getAttribute('data-theme');
+            setTheme(theme);
+            
+            // Update active state
+            themeOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+        });
+    });
+
     // Add YouTube channel
     addYoutubeBtn.addEventListener('click', addYoutubeChannel);
-    
+
     // Save connections
-    saveBtn.addEventListener('click', saveConnections);
-    
+    saveConnectionsBtn.addEventListener('click', saveConnections);
+
     // Refresh streams
-    refreshBtn.addEventListener('click', loadLiveStreams);
-    
-    // Close sidebar when clicking outside
-    document.addEventListener('click', closeSidebarOnOutsideClick);
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', loadLiveStreams);
+    }
+
+    // Close sidebar when clicking outside (only when unpinned)
+    document.addEventListener('click', (event) => {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnMenuToggle = menuToggle.contains(event.target);
+        const isClickOnCloseBtn = closeBtn.contains(event.target);
+        const isClickOnPinBtn = pinBtn.contains(event.target);
+
+        if (!isClickInsideSidebar && !isClickOnMenuToggle && !isClickOnCloseBtn && !isClickOnPinBtn &&
+            sidebar.classList.contains('active') && !isPinned) {
+            closeSidebar();
+        }
+    });
+
+    // Event listeners for YouTube channel selection buttons
+    const channelSelectBtns = document.querySelectorAll('.channel-select-btn');
+    if (channelSelectBtns.length > 0) {
+        channelSelectBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const channelName = this.getAttribute('data-channel-name');
+                channelSelectBtns.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.video-display-grid').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.getElementById(`${channelName}-videos`).classList.add('active');
+
+                nextPageTokens[channelName] = null;
+                document.getElementById(`${channelName}-videos`).innerHTML = '';
+                currentLoadingChannel = channelName;
+                loadYouTubeUploadedVideos(channelName);
+            });
+        });
+    }
+
+    // Infinite scroll for YouTube videos
+    const youtubeVideosPage = document.getElementById('youtube-videos');
+    if (youtubeVideosPage) {
+        youtubeVideosPage.addEventListener('scroll', handleInfiniteScroll);
+    }
+}
+
+// Apply pinned state
+function applyPinnedState() {
+    document.body.classList.add('sidebar-pinned');
+    sidebar.classList.add('active');
+    pinBtn.classList.add('active');
+    pinBtn.style.transform = 'rotate(45deg)';
+    sidebarOverlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+    localStorage.setItem('sidebarPinned', 'true');
+}
+
+// Apply unpinned state
+function applyUnpinnedState() {
+    document.body.classList.remove('sidebar-pinned');
+    pinBtn.classList.remove('active');
+    pinBtn.style.transform = 'rotate(0)';
+    localStorage.setItem('sidebarPinned', 'false');
 }
 
 // Toggle sidebar
 function toggleSidebar() {
-    menuToggle.classList.toggle('active');
-    sidebar.classList.toggle('active');
+    if (isPinned) return;
+    
+    if (sidebar.classList.contains('active')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+}
+
+
+// Open sidebar
+function openSidebar() {
+    sidebar.classList.add('active');
+    menuToggle.classList.add('active');
+    sidebarOverlay.classList.add('active');
+    document.body.classList.add('no-scroll');
 }
 
 // Toggle pin sidebar
 function togglePinSidebar() {
     isPinned = !isPinned;
-    pinBtn.classList.toggle('active', isPinned);
-    pinBtn.style.color = isPinned ? '#3498db' : '';
-    pinBtn.style.transform = isPinned ? 'rotate(45deg)' : 'rotate(0)';
-    
-    // Adjust main content when sidebar is pinned
     if (isPinned) {
-        main.style.paddingLeft = `calc(${sidebar.offsetWidth}px + 25px)`;
+        applyPinnedState();
+        openSidebar();
     } else {
-        main.style.paddingLeft = '25px';
+        applyUnpinnedState();
+        closeSidebar();
     }
+}
+
+// Add these helper functions
+function applyPinnedState() {
+    document.body.classList.add('sidebar-pinned');
+    sidebar.classList.add('active');
+    pinBtn.classList.add('active');
+    pinBtn.style.transform = 'rotate(45deg)';
+    sidebarOverlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+    localStorage.setItem('sidebarPinned', 'true');
+}
+
+function applyUnpinnedState() {
+    document.body.classList.remove('sidebar-pinned');
+    pinBtn.classList.remove('active');
+    pinBtn.style.transform = 'rotate(0)';
+    localStorage.setItem('sidebarPinned', 'false');
 }
 
 // Close sidebar
 function closeSidebar() {
-    menuToggle.classList.remove('active');
-    sidebar.classList.remove('active');
+    if (!isPinned) {
+        sidebar.classList.remove('active');
+        menuToggle.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    }
 }
 
 // Navigate to page
 function navigateToPage() {
-    // Remove active class from all menu items
     menuItems.forEach(i => i.classList.remove('active'));
-    
-    // Add active class to clicked item
     this.classList.add('active');
-    
-    // Get page id
+
     const pageId = this.getAttribute('data-page');
-    
-    // Hide all pages
     pages.forEach(page => page.classList.remove('active'));
-    
-    // Show selected page
     document.getElementById(pageId).classList.add('active');
-    
-    // Load streams if on Live TV page
+
     if (pageId === 'live-tv') {
         loadLiveStreams();
+    } else if (pageId === 'youtube-posts') {
+        loadYouTubePosts();
+    } else if (pageId === 'youtube-videos') {
+        const activeChannelBtn = document.querySelector('.channel-select-btn.active');
+        const channelName = activeChannelBtn ? activeChannelBtn.getAttribute('data-channel-name') : 'swaminarayan-bhagwan';
+        nextPageTokens[channelName] = null;
+        document.getElementById(`${channelName}-videos`).innerHTML = '';
+        currentLoadingChannel = channelName;
+        loadYouTubeUploadedVideos(channelName);
+    } else if (pageId === 'daily-darshan') {
+        // The iframe will load automatically
+    } else if (pageId === 'social-media') {
+        loadSocialMediaWidgets();
+    } else if (pageId === 'connections') {
+        // Connections page doesn't need special handling
+    }
+
+    // Close sidebar only if it's not pinned
+    if (!isPinned) {
+        closeSidebar();
+    }
+}
+
+// Toggle theme
+function toggleTheme() {
+    if (document.body.classList.contains('dark-theme')) {
+        setTheme('light');
+        themeOptions[0].classList.remove('active');
+        themeOptions[1].classList.add('active');
+    } else {
+        setTheme('dark');
+        themeOptions[1].classList.remove('active');
+        themeOptions[0].classList.add('active');
+    }
+}
+
+// Set theme
+function setTheme(theme) {
+    if (theme === 'light') {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'dark');
+    }
+    
+    // Re-load Twitter widget to apply new theme if on social media page
+    if (document.getElementById('social-media').classList.contains('active')) {
+        loadTwitterWidget();
     }
 }
 
 // Add YouTube channel
 function addYoutubeChannel() {
     const channelId = youtubeInput.value.trim();
-    
     if (channelId) {
-        // Check if channel already exists
         if (!youtubeChannels.includes(channelId)) {
             youtubeChannels.push(channelId);
             renderYoutubeAccounts();
@@ -572,7 +1036,7 @@ function addYoutubeChannel() {
 // Render YouTube accounts
 function renderYoutubeAccounts() {
     youtubeAccounts.innerHTML = '';
-    
+
     youtubeChannels.forEach(channel => {
         const accountItem = document.createElement('div');
         accountItem.className = 'account-item';
@@ -581,8 +1045,7 @@ function renderYoutubeAccounts() {
             <button class="remove-btn" data-channel="${channel}"><i class="fas fa-times"></i></button>
         `;
         youtubeAccounts.appendChild(accountItem);
-        
-        // Add event listener to remove button
+
         accountItem.querySelector('.remove-btn').addEventListener('click', function() {
             const channelToRemove = this.getAttribute('data-channel');
             youtubeChannels = youtubeChannels.filter(c => c !== channelToRemove);
@@ -593,20 +1056,18 @@ function renderYoutubeAccounts() {
 
 // Save connections
 function saveConnections() {
-    // Save to localStorage
     localStorage.setItem('youtubeChannels', JSON.stringify(youtubeChannels));
-    
-    // Show success message
-    saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved Successfully!';
-    saveBtn.style.background = 'var(--success)';
-    
+
+    saveConnectionsBtn.innerHTML = '<i class="fas fa-check"></i> Saved Successfully!';
+    saveConnectionsBtn.style.background = 'var(--success-dark)';
+    if (document.body.classList.contains('light-theme')) {
+        saveConnectionsBtn.style.background = 'var(--success-light)';
+    }
+
     setTimeout(() => {
-        saveBtn.innerHTML = 'Save Connections';
-        saveBtn.style.background = 'var(--accent)';
+        saveConnectionsBtn.innerHTML = 'Save Connections';
+        saveConnectionsBtn.style.background = '';
     }, 2000);
-    
-    // Reload live streams
-    loadLiveStreams();
 }
 
 // Load connections
@@ -622,8 +1083,7 @@ function loadConnections() {
 function loadLiveStreams() {
     const videoContainers = document.querySelectorAll('.video-container');
     const videoNames = document.querySelectorAll('.video-name');
-    
-    // Show loading state
+
     videoContainers.forEach(container => {
         container.querySelector('.video-frame').innerHTML = `
             <div class="loader">
@@ -631,115 +1091,426 @@ function loadLiveStreams() {
             </div>
         `;
     });
-    
+
     videoNames.forEach(name => {
         name.textContent = 'Loading channel...';
     });
-    
-    // Simulate API call to fetch live streams
+
+    const liveStreams = [
+        { id: "9Z39gmRScKM", title: "Swaminarayan Live TV" },
+        { id: "OpmL54H8YJU", title: "Swaminarayan Kirtan Live TV" },
+        { id: "PJab2ScnQQs", title: "Swaminarayan Katha Live TV" },
+        { id: "xvamYeFA574", title: "Swaminarayan Dhun Live Tv" }
+    ];
+
     setTimeout(() => {
-        // If we have saved channels, use them
-        if (youtubeChannels.length > 0) {
-            youtubeChannels.forEach((channelId, index) => {
-                if (index < videoContainers.length) {
-                    const container = videoContainers[index];
-                    const nameElement = videoNames[index];
-                    
-                    // Simulate different channel names
-                    const channelNames = [
-                        "Swaminarayan Bhagwan Live",
-                        "BAPS Swaminarayan Live",
-                        "Morning Aarti Live",
-                        "Evening Discourse Live"
-                    ];
-                    
-                    container.querySelector('.video-frame').innerHTML = `
-                        <iframe src="https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&mute=1" 
-                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    `;
-                    nameElement.textContent = channelNames[index] || `Channel ${index + 1}`;
-                }
-            });
-        } else {
-            // Use default channels
-            const defaultChannels = [
-                "UC6VkhPuCCwR_kG0GExjoozg", // Swaminarayan Bhagwan
-                "UCq8CX_FsV7v8wZcBd7sxjIg"  // BAPS Swaminarayan
-            ];
-            
-            defaultChannels.forEach((channelId, index) => {
-                if (index < videoContainers.length) {
-                    const container = videoContainers[index];
-                    const nameElement = videoNames[index];
-                    
-                    const channelNames = [
-                        "Swaminarayan Bhagwan Live",
-                        "BAPS Swaminarayan Live"
-                    ];
-                    
-                    container.querySelector('.video-frame').innerHTML = `
-                        <iframe src="https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&mute=1" 
-                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    `;
-                    nameElement.textContent = channelNames[index] || `Channel ${index + 1}`;
-                }
-            });
-        }
-    }, 1500);
+        liveStreams.forEach((stream, index) => {
+            if (index < videoContainers.length) {
+                const container = videoContainers[index];
+                const nameElement = videoNames[index];
+
+                container.querySelector('.video-frame').innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${stream.id}?autoplay=1&mute=1"
+                            frameborder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+                nameElement.textContent = stream.title;
+                nameElement.previousElementSibling.className = 'fas fa-circle online';
+            }
+        });
+    }, 500);
 }
 
-// Close sidebar when clicking outside
-function closeSidebarOnOutsideClick(event) {
-    const isClickInsideSidebar = sidebar.contains(event.target);
-    const isClickOnMenuToggle = menuToggle.contains(event.target);
-    
-    if (!isClickInsideSidebar && !isClickOnMenuToggle && !isPinned) {
-        menuToggle.classList.remove('active');
-        sidebar.classList.remove('active');
+// Function to load YouTube posts
+function loadYouTubePosts() {
+    const bhagwanPostsContainer = document.getElementById('swaminarayan-bhagwan-posts');
+    const swaminarayanPostsContainer = document.getElementById('swaminarayan-posts');
+
+    bhagwanPostsContainer.innerHTML = '';
+    swaminarayanPostsContainer.innerHTML = '';
+
+    const bhagwanChannelUrl = "https://www.youtube.com/channel/UCQXWP4gEdEwlb6vodwrU75A/community";
+    const swaminarayanChannelUrl = "https://www.youtube.com/channel/UC7HQ3mzdsyvLU0Y7a2t3N7A/community";
+
+    bhagwanPostsContainer.innerHTML = `
+        <div class="error" style="text-align: center; padding: 20px;">
+            <p style="margin-bottom: 10px;">YouTube community posts are not directly embeddable via simple iframes.</p>
+            <p>Please visit the community tab directly:</p>
+            <a href="${bhagwanChannelUrl}" target="_blank" style="color: var(--accent-dark); text-decoration: none; font-weight: bold;">
+                Swaminarayan Bhagwan Community <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    `;
+
+    swaminarayanPostsContainer.innerHTML = `
+        <div class="error" style="text-align: center; padding: 20px;">
+            <p style="margin-bottom: 10px;">YouTube community posts are not directly embeddable via simple iframes.</p>
+            <p>Please visit the community tab directly:</p>
+            <a href="${swaminarayanChannelUrl}" target="_blank" style="color: var(--accent-dark); text-decoration: none; font-weight: bold;">
+                Swaminarayan Community <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    `;
+}
+
+// Function to fetch and display YouTube uploaded videos
+async function loadYouTubeUploadedVideos(channelName) {
+    const containerId = `${channelName}-videos`;
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    currentLoadingChannel = channelName;
+
+    let loader = container.querySelector('.loader-container');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.className = 'loader-container';
+        loader.style.width = '100%';
+        loader.style.textAlign = 'center';
+        loader.style.padding = '20px';
+        loader.innerHTML = '<div class="loader-circle" style="margin: 0 auto;"></div>';
+        container.appendChild(loader);
     }
+
+    const channelId = CHANNEL_IDS[channelName];
+    if (!channelId) {
+        if (loader) loader.remove();
+        container.innerHTML = `<div class="error">Invalid channel name provided.</div>`;
+        return;
+    }
+
+    try {
+        const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${YOUTUBE_API_KEY}`);
+        if (!channelResponse.ok) {
+            const errorText = await channelResponse.text();
+            throw new Error(`HTTP error! status: ${channelResponse.status}, message: ${errorText}`);
+        }
+        const channelData = await channelResponse.json();
+        const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
+
+        let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${uploadsPlaylistId}&key=${YOUTUBE_API_KEY}&maxResults=12`;
+        if (nextPageTokens[channelName]) {
+            url += `&pageToken=${nextPageTokens[channelName]}`;
+        }
+
+        const videosResponse = await fetch(url);
+        if (!videosResponse.ok) {
+            const errorText = await videosResponse.text();
+            throw new Error(`HTTP error! status: ${videosResponse.status}, message: ${errorText}`);
+        }
+        const videosData = await videosResponse.json();
+
+        const videoIds = videosData.items.map(item => item.contentDetails.videoId).join(',');
+        let videoStats = {};
+        if (videoIds) {
+            const statsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${YOUTUBE_API_KEY}`);
+            if (statsResponse.ok) {
+                const statsData = await statsResponse.json();
+                statsData.items.forEach(item => {
+                    videoStats[item.id] = item.statistics;
+                });
+            } else {
+                console.warn("Could not fetch video statistics:", statsResponse.statusText);
+            }
+        }
+
+        nextPageTokens[channelName] = videosData.nextPageToken || null;
+
+        if (loader) {
+            loader.remove();
+        }
+
+        renderYouTubeVideos(containerId, videosData.items, videoStats);
+
+    } catch (error) {
+        console.error('Error fetching YouTube videos:', error);
+        if (loader) {
+            loader.remove();
+        }
+        let errorMessage = 'Failed to load videos. This could be due to API key issues, network problems, or too many requests.';
+        if (error.message.includes('Quota exceeded')) {
+            errorMessage = 'YouTube API daily quota exceeded. Please try again tomorrow.';
+        } else if (error.message.includes('Invalid API key')) {
+            errorMessage = 'Invalid YouTube API Key. Please check your key in script.js.';
+        } else if (error.message.includes('Forbidden')) {
+            errorMessage = 'Access to YouTube API forbidden. Check API key restrictions or channel privacy.';
+        }
+        container.innerHTML += `<div class="error" style="padding: 20px;">${errorMessage}</div>`;
+    } finally {
+        const youtubeVideosPage = document.getElementById('youtube-videos');
+        if (youtubeVideosPage) {
+            youtubeVideosPage.dataset.loading = '';
+        }
+    }
+}
+
+// Function to render YouTube videos
+function renderYouTubeVideos(containerId, videos, videoStats) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const hasExistingContent = container.children.length > 0 && !container.querySelector('.error');
+
+    if (!hasExistingContent && videos.length === 0) {
+        container.innerHTML = `<div class="error" style="text-align: center; padding: 20px;">No uploaded videos found for this channel or embedding is restricted.</div>`;
+        return;
+    }
+
+    if (videos && videos.length > 0) {
+        videos.forEach(video => {
+            const videoId = video.contentDetails.videoId;
+            const title = video.snippet.title;
+            const thumbnailUrl = video.snippet.thumbnails.medium.url;
+            const publishedAt = new Date(video.snippet.publishedAt);
+            const relativeTime = timeAgo(publishedAt);
+            const viewCount = videoStats[videoId] ? formatNumber(videoStats[videoId].viewCount) : 'N/A';
+
+            const videoItem = document.createElement('div');
+            videoItem.className = 'youtube-video-item';
+            videoItem.innerHTML = `
+                <img src="${thumbnailUrl}" alt="${title}">
+                <div class="youtube-video-item-info">
+                    <h3>${title}</h3>
+                    <p>Published: ${relativeTime}</p>
+                    <p>Views: ${viewCount}</p>
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">Watch Video <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            `;
+            container.appendChild(videoItem);
+        });
+    } else if (nextPageTokens[containerId.replace('-videos', '')] === null) {
+        // If no more videos and next page token is null, indicate end of content
+        if (!container.querySelector('.no-more-videos-message')) {
+            const noMoreVideosDiv = document.createElement('div');
+            noMoreVideosDiv.className = 'error no-more-videos-message';
+            noMoreVideosDiv.style.textAlign = 'center';
+            noMoreVideosDiv.style.padding = '20px';
+            noMoreVideosDiv.textContent = 'No more videos to load.';
+            container.appendChild(noMoreVideosDiv);
+        }
+    }
+}
+
+// Helper function to format large numbers
+function formatNumber(num) {
+    num = Number(num);
+    if (isNaN(num)) return 'N/A';
+
+    if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+    if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    return num.toString();
+}
+
+// Helper function to calculate time ago
+function timeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    let interval = seconds / 31536000; // Years
+    if (interval > 1) return Math.floor(interval) + " years ago";
+    interval = seconds / 2592000; // Months
+    if (interval > 1) return Math.floor(interval) + " months ago";
+    interval = seconds / 86400; // Days
+    if (interval > 1) return Math.floor(interval) + " days ago";
+    interval = seconds / 3600; // Hours
+    if (interval > 1) return Math.floor(interval) + " hours ago";
+    interval = seconds / 60; // Minutes
+    if (interval > 1) return Math.floor(interval) + " minutes ago";
+    return Math.floor(seconds) + " seconds ago";
+}
+
+// Function to handle infinite scroll
+function handleInfiniteScroll() {
+    const youtubeVideosPage = document.getElementById('youtube-videos');
+    if (!youtubeVideosPage || !youtubeVideosPage.classList.contains('active')) {
+        return;
+    }
+
+    const { scrollTop, scrollHeight, clientHeight } = youtubeVideosPage;
+
+    if (scrollTop + clientHeight >= scrollHeight - 100 &&
+        currentLoadingChannel &&
+        nextPageTokens[currentLoadingChannel] !== null &&
+        !youtubeVideosPage.dataset.loading
+    ) {
+        youtubeVideosPage.dataset.loading = 'true';
+        loadYouTubeUploadedVideos(currentLoadingChannel);
+    }
+}
+
+// Function to load social media widgets
+function loadSocialMediaWidgets() {
+    try {
+        loadFacebookWidget();
+        loadInstagramWidget();
+        setTimeout(loadTwitterWidget, 500);
+    } catch (error) {
+        console.error("Social media load error:", error);
+    }
+}
+
+// Function to load Facebook widget
+function loadFacebookWidget() {
+    const facebookContainer = document.getElementById('facebook-widget-container');
+    if (!facebookContainer) return;
+    facebookContainer.innerHTML = '';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fswaminarayanbhagwan2%2F&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId";
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.frameBorder = '0';
+    iframe.allowTransparency = 'true';
+    iframe.allow = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+    facebookContainer.appendChild(iframe);
+}
+
+// Function to load Instagram widget
+function loadInstagramWidget() {
+    const container = document.getElementById('instagram-widget-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'instagram-media';
+    blockquote.setAttribute('data-instgrm-permalink', 'https://www.instagram.com/p/CrYenF0vL3n/');
+    blockquote.setAttribute('data-instgrm-version', '14');
+    blockquote.style.width = '100%';
+    blockquote.style.height = '500px';
+    container.appendChild(blockquote);
+
+    // Create and append the Instagram script
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.instagram.com/embed.js';
+    document.body.appendChild(script);
+}
+
+// Function to load Twitter widget
+function loadTwitterWidget() {
+    const twitterContainer = document.getElementById('twitter-widget-container');
+    if (!twitterContainer) return;
+
+    twitterContainer.innerHTML = '<div class="loader"><div class="loader-circle"></div></div>';
+
+    const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+
+    // Remove any existing Twitter script
+    const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+    if (existingScript) {
+        existingScript.remove();
+    }
+
+    // Create Twitter timeline element
+    twitterContainer.innerHTML = '';
+    const twitterTimeline = document.createElement('a');
+    twitterTimeline.className = 'twitter-timeline';
+    twitterTimeline.href = 'https://x.com/TheCensorTalk';
+    twitterTimeline.textContent = 'Tweets by TheCensorTalk';
+    twitterTimeline.setAttribute('data-width', '100%');
+    twitterTimeline.setAttribute('data-height', '500');
+    twitterTimeline.setAttribute('data-dnt', 'true');
+    twitterTimeline.setAttribute('data-chrome', 'noheader nofooter transparent');
+    twitterTimeline.setAttribute('data-tweet-limit', '5');
+    twitterTimeline.setAttribute('data-theme', currentTheme);
+    twitterContainer.appendChild(twitterTimeline);
+
+    // Create and append Twitter script
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
 } 
 ================================================= 
-END OF FILE: script_js.js 
+END OF FILE: script.js 
 ================================================= 
  
 ================================================= 
-FILE: styles_css.css 
+FILE: styles.css 
 ================================================= 
  
+/* ====== VARIABLES & RESET ====== */
 :root {
-    --primary: #1e2a38;
-    --secondary: #2c3e50;
-    --accent: #3498db;
-    --accent-dark: #2980b9;
-    --light: #ecf0f1;
-    --dark: #0d1b2a;
-    --success: #27ae60;
-    --warning: #f39c12;
-    --danger: #e74c3c;
+    /* Dark Theme Variables */
+    --primary-dark: #1e2a38;
+    --secondary-dark: #2c3e50;
+    --accent-dark: #3498db;
+    --accent-dark-hover: #2980b9;
+    --text-dark: #ecf0f1;
+    --bg-dark: #0d1b2a;
+    --card-dark: #1a2a3a;
+    --success-dark: #27ae60;
+    --warning-dark: #f39c12;
+    --danger-dark: #e74c3c;
+    --border-dark: rgba(255,255,255,0.1);
+        --success-color: #27ae60;
+
+    
+    /* Light Theme Variables */
+    --primary-light: #f8f9fa;
+    --secondary-light: #e9ecef;
+    --accent-light: #007bff;
+    --accent-light-hover: #0056b3;
+    --text-light: #212529;
+    --bg-light: #ffffff;
+    --card-light: #ffffff;
+    --success-light: #28a745;
+    --warning-light: #ffc107;
+    --danger-light: #dc3545;
+    --border-light: rgba(0,0,0,0.1);
+    
+    /* Common Variables */
     --sidebar-width: 280px;
     --header-height: 70px;
     --transition-speed: 0.3s;
-    --border-radius: 8px;
-    --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    --border-radius: 12px;
+    --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --font-family: 'Poppins', sans-serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, var(--dark), #1a2a3a);
-    color: var(--light);
+    font-family: var(--font-family);
+    background: var(--bg-dark);
+    color: var(--text-dark);
     overflow-x: hidden;
     min-height: 100vh;
+    transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-/* Header Styles */
+body.light-theme {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+/* Add to the body section */
+body.sidebar-pinned .sidebar {
+    transform: translateX(0);
+}
+
+/* Add this new class */
+.sidebar-pinned main {
+    margin-left: var(--sidebar-width);
+}
+
+/* Add this to existing media query */
+@media (max-width: 992px) {
+    body.sidebar-pinned .sidebar-overlay {
+        display: none;
+    }
+    
+    body.sidebar-pinned main {
+        margin-left: 0;
+    }
+}
+
+/* ====== HEADER STYLES ====== */
 header {
-    background-color: rgba(26, 37, 46, 0.95);
+    background: var(--primary-dark);
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -749,31 +1520,61 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: background var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+body.light-theme header {
+    background: var(--primary-light);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-dark);
+    letter-spacing: 0.5px;
+    flex-grow: 1;
+}
+
+body.light-theme .logo {
+    color: var(--accent-light);
+}
+
+.logo i {
+    font-size: 1.8rem;
 }
 
 .menu-toggle {
+    width: 30px;
+    height: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30px;
-    height: 21px;
     cursor: pointer;
+    position: relative;
+    z-index: 1051;
     margin-right: 20px;
-    transition: all var(--transition-speed);
 }
 
 .menu-toggle span {
+    display: block;
+    width: 100%;
     height: 3px;
-    background: var(--light);
-    border-radius: 3px;
-    transition: all var(--transition-speed);
+    background-color: var(--text-dark);
+    border-radius: 2px;
+    transition: all var(--transition-speed) ease;
+}
+
+body.light-theme .menu-toggle span {
+    background-color: var(--text-light);
 }
 
 .menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: translateY(8.5px) rotate(45deg);
 }
 
 .menu-toggle.active span:nth-child(2) {
@@ -781,46 +1582,75 @@ header {
 }
 
 .menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+    transform: translateY(-8.5px) rotate(-45deg);
 }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    background: linear-gradient(45deg, var(--accent), #9b59b6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    flex-grow: 1;
-    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--secondary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition-speed);
 }
 
-/* Sidebar Styles */
+body.light-theme .theme-toggle {
+    background: var(--secondary-light);
+}
+
+.theme-toggle:hover {
+    background: var(--accent-dark);
+}
+
+body.light-theme .theme-toggle:hover {
+    background: var(--accent-light);
+}
+
+/* ====== SIDEBAR STYLES ====== */
 .sidebar {
-    position: fixed;
-    top: var(--header-height);
-    left: -100%;
     width: var(--sidebar-width);
-    height: calc(100vh - var(--header-height));
-    background: rgba(26, 37, 46, 0.97);
-    backdrop-filter: blur(10px);
-    z-index: 900;
-    transition: all var(--transition-speed);
-    overflow-y: auto;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.4);
+    background: var(--secondary-dark);
+    position: fixed;
+    left: 0;
+    height: 100%;
+    padding-top: var(--header-height);
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed) ease, background var(--transition-speed);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+}
+
+body.light-theme .sidebar {
+    background: var(--secondary-light);
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
 }
 
 .sidebar.active {
-    left: 0;
+    transform: translateX(0);
 }
 
 .sidebar-header {
+    height: var(--header-height);
     display: flex;
+    align-items: center;
     justify-content: flex-end;
-    padding: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 20px;
+    background: var(--primary-dark);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1052;
+    transition: background var(--transition-speed);
+}
+
+body.light-theme .sidebar-header {
+    background: var(--primary-light);
 }
 
 .sidebar-controls {
@@ -829,406 +1659,338 @@ header {
 }
 
 .sidebar-controls i {
-    font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.2s;
-    padding: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    transition: color 0.2s, transform 0.2s;
+}
+
+body.light-theme .sidebar-controls i {
+    color: var(--text-light);
 }
 
 .sidebar-controls i:hover {
-    background: var(--accent);
-    transform: scale(1.1);
+    color: var(--accent-dark);
+}
+
+body.light-theme .sidebar-controls i:hover {
+    color: var(--accent-light);
+}
+
+.sidebar-controls .fa-thumbtack.active {
+    color: var(--accent-dark);
+    transform: rotate(45deg);
+}
+
+body.light-theme .sidebar-controls .fa-thumbtack.active {
+    color: var(--accent-light);
 }
 
 .sidebar-menu {
-    padding: 20px 0;
+    flex-grow: 1;
+    padding-top: 10px;
+    overflow-y: auto;
 }
 
 .menu-item {
-    padding: 15px 25px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    padding: 15px 25px;
+    color: var(--text-dark);
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    border-left: 4px solid transparent;
 }
 
-.menu-item:hover, .menu-item.active {
-    background: rgba(52, 152, 219, 0.15);
-    border-left: 3px solid var(--accent);
+body.light-theme .menu-item {
+    color: var(--text-light);
 }
 
 .menu-item i {
-    font-size: 1.2rem;
-    width: 24px;
-    text-align: center;
-    color: var(--accent);
+    margin-right: 15px;
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s;
 }
 
-.menu-item span {
-    font-size: 1.1rem;
-    font-weight: 500;
+body.light-theme .menu-item i {
+    color: rgba(0, 0, 0, 0.6);
 }
 
-/* Main Content Styles */
+.menu-item:hover,
+.menu-item.active {
+    background: var(--primary-dark);
+    color: var(--accent-dark);
+    border-left-color: var(--accent-dark);
+}
+
+body.light-theme .menu-item:hover,
+body.light-theme .menu-item.active {
+    background: var(--primary-light);
+    color: var(--accent-light);
+    border-left-color: var(--accent-light);
+}
+
+.menu-item:hover i,
+.menu-item.active i {
+    color: var(--accent-dark);
+}
+
+body.light-theme .menu-item:hover i,
+body.light-theme .menu-item.active i {
+    color: var(--accent-light);
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 995;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ====== MAIN CONTENT ====== */
 main {
-    padding: calc(var(--header-height) + 25px) 25px 25px;
-    transition: all var(--transition-speed);
+    margin-top: var(--header-height);
+    padding: 30px;
+    transition: margin-left var(--transition-speed) ease;
     min-height: calc(100vh - var(--header-height));
 }
 
 .page {
     display: none;
-    animation: fadeIn 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 .page.active {
     display: block;
+    opacity: 1;
 }
 
 .page-header {
-    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+body.light-theme .page-header {
+    border-bottom: 1px solid var(--border-light);
 }
 
 .page-title {
     font-size: 2.2rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, var(--accent), #9b59b6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+    font-weight: 600;
+    color: var(--accent-dark);
+}
+
+body.light-theme .page-title {
+    color: var(--accent-light);
 }
 
 .refresh-btn {
-    background: rgba(52, 152, 219, 0.2);
-    color: var(--accent);
+    background: var(--accent-dark);
+    color: white;
     padding: 10px 20px;
     border-radius: var(--border-radius);
     cursor: pointer;
-    transition: all 0.3s;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-weight: 500;
+    transition: background 0.2s, transform 0.2s;
+    border: none;
+    outline: none;
+    font-family: var(--font-family);
+    font-size: 1rem;
+}
+
+body.light-theme .refresh-btn {
+    background: var(--accent-light);
 }
 
 .refresh-btn:hover {
-    background: rgba(52, 152, 219, 0.3);
+    background: var(--accent-dark-hover);
+    transform: translateY(-2px);
 }
 
-/* Live TV Grid */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 25px;
-    height: calc(100vh - var(--header-height) - 120px);
+body.light-theme .refresh-btn:hover {
+    background: var(--accent-light-hover);
 }
 
-.video-container {
-    position: relative;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--card-shadow);
-    transition: all 0.3s ease;
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.refresh-btn i {
+    transition: transform 0.5s;
 }
 
-.video-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+.refresh-btn:hover i {
+    transform: rotate(360deg);
 }
 
-.video-frame {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #1a2a3a, #0d1b2a);
-}
-
-.video-frame iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.video-title {
-    padding: 15px 20px;
-    background: rgba(26, 37, 46, 0.8);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.1rem;
-}
-
-.video-title i {
-    color: var(--danger);
-    animation: pulse 1.5s infinite;
-}
-
-/* Home Page */
+/* ====== DASHBOARD STYLES ====== */
 .home-content {
-    max-width: 900px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 40px;
-    background: rgba(26, 37, 46, 0.7);
-    border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .welcome-text {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    text-align: center;
-    background: linear-gradient(45deg, var(--accent), #9b59b6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-size: 2.5rem;
     font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+}
+
+body.light-theme .welcome-text {
+    color: var(--text-light);
+}
+
+.home-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.light-theme .home-description {
+    color: rgba(0, 0, 0, 0.7);
 }
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 25px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .stat-card {
-    background: rgba(52, 152, 219, 0.15);
+    background: var(--card-dark);
+    padding: 25px;
     border-radius: var(--border-radius);
-    padding: 25px 20px;
+    box-shadow: var(--card-shadow);
     text-align: center;
-    transition: all 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+body.light-theme .stat-card {
+    background: var(--card-light);
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    background: rgba(52, 152, 219, 0.25);
-    box-shadow: var(--card-shadow);
+    transform: translateY(-10px);
 }
 
 .stat-value {
     font-size: 2.8rem;
     font-weight: 700;
-    margin-bottom: 5px;
-    color: var(--accent);
+    color: var(--accent-dark);
+    margin-bottom: 10px;
+}
+
+body.light-theme .stat-value {
+    color: var(--accent-light);
 }
 
 .stat-label {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    margin-bottom: 15px;
 }
 
-.home-description {
-    text-align: center;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.1rem;
+body.light-theme .stat-label {
+    color: rgba(0, 0, 0, 0.7);
 }
 
-/* Connections Page */
-.connections-content {
-    max-width: 800px;
-    margin: 0 auto;
-    background: rgba(26, 37, 46, 0.7);
+.stat-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 2.5rem;
+    opacity: 0.1;
+}
+
+/* ====== LIVE TV STYLES ====== */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.video-container {
+    background: var(--card-dark);
     border-radius: var(--border-radius);
+    overflow: hidden;
     box-shadow: var(--card-shadow);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 30px;
-}
-
-.social-platform {
-    margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.platform-header {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    flex-direction: column;
+    transition: transform 0.3s ease;
 }
 
-.platform-header i {
-    font-size: 1.8rem;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(52, 152, 219, 0.2);
-    color: var(--accent);
+body.light-theme .video-container {
+    background: var(--card-light);
 }
 
-.platform-header h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
+.video-container:hover {
+    transform: translateY(-5px);
 }
 
-.platform-description {
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-}
-
-.account-list {
-    margin-bottom: 15px;
-}
-
-.account-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: var(--border-radius);
-    margin-bottom: 10px;
-}
-
-.account-item input {
-    flex-grow: 1;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    color: var(--light);
-    font-size: 1rem;
-}
-
-.account-item input:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-.account-item .remove-btn {
-    margin-left: 10px;
-    background: rgba(231, 76, 60, 0.2);
-    color: var(--danger);
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.account-item .remove-btn:hover {
-    background: rgba(231, 76, 60, 0.3);
-}
-
-.add-account {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.add-account input {
-    flex-grow: 1;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 12px 15px;
-    border-radius: var(--border-radius);
-    color: var(--light);
-    font-size: 1rem;
-}
-
-.add-account input:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-.add-account button {
-    background: rgba(39, 174, 96, 0.2);
-    color: var(--success);
-    border: none;
-    padding: 12px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    font-size: 1rem;
-    gap: 8px;
-    white-space: nowrap;
-}
-
-.add-account button:hover {
-    background: rgba(39, 174, 96, 0.3);
-}
-
-.save-btn {
-    display: block;
-    margin: 30px auto 0;
-    padding: 12px 40px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-}
-
-.save-btn:hover {
-    background: var(--accent-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-    0% { opacity: 0.4; }
-    50% { opacity: 1; }
-    100% { opacity: 0.4; }
-}
-
-/* Loader */
-.loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.video-frame {
+    position: relative;
     width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    background: #000;
+}
+
+.video-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
 .loader-circle {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--accent-dark);
+    border-radius: 50%;
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    border: 5px solid rgba(255, 255, 255, 0.1);
-    border-top: 5px solid var(--accent);
     animation: spin 1s linear infinite;
+}
+
+body.light-theme .loader-circle {
+    border-top: 4px solid var(--accent-light);
 }
 
 @keyframes spin {
@@ -1236,71 +1998,1023 @@ main {
     100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design */
+.video-title {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+body.light-theme .video-title {
+    color: var(--text-light);
+}
+
+.video-title .online {
+    color: var(--success-dark);
+}
+
+.video-title .offline {
+    color: var(--danger-dark);
+}
+
+/* ====== CONNECTIONS PAGE STYLES ====== */
+.connections-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.social-platform {
+    background: var(--card-dark);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+body.light-theme .social-platform {
+    background: var(--card-light);
+}
+
+.platform-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+body.light-theme .platform-header {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.platform-header i {
+    font-size: 2.5rem;
+    color: var(--accent-dark);
+}
+
+body.light-theme .platform-header i {
+    color: var(--accent-light);
+}
+
+.platform-header h3 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+body.light-theme .platform-header h3 {
+    color: var(--text-light);
+}
+
+.platform-description {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+body.light-theme .platform-description {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.account-list {
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.account-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--primary-dark);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    border: 1px solid var(--border-dark);
+}
+
+body.light-theme .account-item {
+    background: var(--primary-light);
+    border: 1px solid var(--border-light);
+}
+
+.account-item input[type="text"] {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    font-size: 1rem;
+    padding: 5px 0;
+    outline: none;
+}
+
+body.light-theme .account-item input[type="text"] {
+    color: var(--text-light);
+}
+
+.account-item .remove-btn {
+    background: var(--danger-dark);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+body.light-theme .account-item .remove-btn {
+    background: var(--danger-light);
+}
+
+.account-item .remove-btn:hover {
+    background: #c0392b;
+}
+
+.add-account {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.add-account input[type="text"] {
+    flex-grow: 1;
+    background: var(--primary-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--border-radius);
+    padding: 12px 15px;
+    color: var(--text-dark);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+body.light-theme .add-account input[type="text"] {
+    background: var(--primary-light);
+    border: 1px solid var(--border-light);
+    color: var(--text-light);
+}
+
+.add-account input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-theme .add-account input[type="text"]::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.add-account input[type="text"]:focus {
+    border-color: var(--accent-dark);
+}
+
+body.light-theme .add-account input[type="text"]:focus {
+    border-color: var(--accent-light);
+}
+
+.add-account button {
+    background: var(--accent-dark);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+body.light-theme .add-account button {
+    background: var(--accent-light);
+}
+
+.add-account button:hover {
+    background: var(--accent-dark-hover);
+    transform: translateY(-2px);
+}
+
+body.light-theme .add-account button:hover {
+    background: var(--accent-light-hover);
+}
+
+.save-btn {
+    background: var(--accent-dark);
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 30px;
+    width: fit-content;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+body.light-theme .save-btn {
+    background: var(--accent-light);
+}
+
+.save-btn:hover {
+    background: var(--accent-dark-hover);
+    transform: translateY(-2px);
+}
+
+body.light-theme .save-btn:hover {
+    background: var(--accent-light-hover);
+}
+
+/* ====== YOUTUBE VIDEOS PAGE ====== */
+.youtube-channels-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.channel-select-btn {
+    background: var(--primary-dark);
+    color: var(--text-dark);
+    padding: 12px 25px;
+    border: 2px solid var(--primary-dark);
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.light-theme .channel-select-btn {
+    background: var(--primary-light);
+    color: var(--text-light);
+    border: 2px solid var(--primary-light);
+}
+
+.channel-select-btn:hover {
+    background: var(--accent-dark-hover);
+    border-color: var(--accent-dark-hover);
+    transform: translateY(-2px);
+}
+
+body.light-theme .channel-select-btn:hover {
+    background: var(--accent-light-hover);
+    border-color: var(--accent-light-hover);
+}
+
+.channel-select-btn.active {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    color: white;
+}
+
+body.light-theme .channel-select-btn.active {
+    background: var(--accent-light);
+    border-color: var(--accent-light);
+    color: white;
+}
+
+.video-display-grid {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.video-display-grid.active {
+    display: grid;
+}
+
+.youtube-video-item {
+    background: var(--card-dark);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+}
+
+body.light-theme .youtube-video-item {
+    background: var(--card-light);
+}
+
+.youtube-video-item:hover {
+    transform: translateY(-5px);
+}
+
+.youtube-video-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.youtube-video-item-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.youtube-video-item-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    line-height: 1.4;
+    max-height: 3.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.light-theme .youtube-video-item-info h3 {
+    color: var(--text-light);
+}
+
+.youtube-video-item-info p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+}
+
+body.light-theme .youtube-video-item-info p {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.youtube-video-item-info a {
+    display: inline-block;
+    background: var(--accent-dark);
+    color: white;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    align-self: flex-start;
+    transition: background-color 0.2s;
+}
+
+body.light-theme .youtube-video-item-info a {
+    background: var(--accent-light);
+}
+
+.youtube-video-item-info a:hover {
+    background: var(--accent-dark-hover);
+}
+
+body.light-theme .youtube-video-item-info a:hover {
+    background: var(--accent-light-hover);
+}
+
+/* ====== YOUTUBE POSTS PAGE ====== */
+.posts-columns-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.posts-column {
+    background: var(--card-dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+body.light-theme .posts-column {
+    background: var(--card-light);
+}
+
+.channel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+body.light-theme .channel-header {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.channel-header h2 {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: var(--text-dark);
+}
+
+body.light-theme .channel-header h2 {
+    color: var(--text-light);
+}
+
+.channel-header .fa-youtube {
+    color: #ff0000;
+}
+
+.view-channel {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+body.light-theme .view-channel {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-light);
+}
+
+.view-channel:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+body.light-theme .view-channel:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.posts-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 500px;
+    padding-right: 10px;
+}
+
+.post-item {
+    background: var(--primary-dark);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .post-item {
+    background: var(--primary-light);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.post-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-dark);
+}
+
+body.light-theme .post-avatar {
+    border: 2px solid var(--accent-light);
+}
+
+.post-author {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--accent-dark);
+}
+
+body.light-theme .post-author {
+    color: var(--accent-light);
+}
+
+.post-date {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+body.light-theme .post-date {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.post-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+body.light-theme .post-content {
+    color: var(--text-light);
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.post-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.light-theme .post-stats {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.post-stats span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post-stats i {
+    color: var(--accent-dark);
+}
+
+body.light-theme .post-stats i {
+    color: var(--accent-light);
+}
+
+/* ====== DAILY DARSHAN & AUDIO KATHA ====== */
+.daily-darshan-container {
+    background: var(--card-dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    height: calc(100vh - var(--header-height) - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.light-theme .daily-darshan-container {
+    background: var(--card-light);
+}
+
+.daily-darshan-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+/* ====== SOCIAL MEDIA PAGE ====== */
+.social-media-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.social-column {
+    background: var(--card-dark);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+body.light-theme .social-column {
+    background: var(--card-light);
+}
+
+.social-header {
+    padding: 25px;
+    background: rgba(52, 152, 219, 0.15);
+    border-bottom: 1px solid var(--border-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+body.light-theme .social-header {
+    border-bottom: 1px solid var(--border-light);
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.social-header h2 {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: var(--text-dark);
+}
+
+body.light-theme .social-header h2 {
+    color: var(--text-light);
+}
+
+.social-header .fa-facebook { color: #3b5998; }
+.social-header .fa-instagram { color: #e1306c; }
+.social-header .fa-twitter { color: #1da1f2; }
+
+.social-widget {
+    min-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    flex: 1;
+}
+
+.twitter-timeline {
+    width: 100% !important;
+    min-height: 500px;
+}
+
+#twitter-widget-container {
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.view-profile {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+body.light-theme .view-profile {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-light);
+}
+
+.view-profile:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+body.light-theme .view-profile:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.error {
+    background: rgba(231, 76, 60, 0.2);
+    border: 1px solid var(--danger-dark);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin: 20px;
+    color: var(--danger-dark);
+}
+
+body.light-theme .error {
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid var(--danger-light);
+    color: var(--danger-light);
+}
+
+/* ====== SETTINGS PAGE STYLES ====== */
+.settings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.settings-section {
+    background: var(--card-dark);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--card-shadow);
+}
+
+body.light-theme .settings-section {
+    background: var(--card-light);
+}
+
+.settings-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-dark);
+}
+
+body.light-theme .settings-section h2 {
+    color: var(--accent-light);
+}
+
+.appearance-options {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.theme-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.theme-option.active {
+    border-color: var(--accent-dark);
+}
+
+body.light-theme .theme-option.active {
+    border-color: var(--accent-light);
+}
+
+.theme-preview {
+    width: 180px;
+    height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme-preview {
+    background: var(--bg-dark);
+}
+
+.light-theme-preview {
+    background: var(--bg-light);
+}
+
+.preview-header {
+    height: 20px;
+    background: var(--primary-dark);
+}
+
+.light-theme-preview .preview-header {
+    background: var(--primary-light);
+}
+
+.preview-sidebar {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    width: 40px;
+    height: 100px;
+    background: var(--secondary-dark);
+}
+
+.light-theme-preview .preview-sidebar {
+    background: var(--secondary-light);
+}
+
+.preview-content {
+    position: absolute;
+    left: 40px;
+    top: 20px;
+    right: 0;
+    height: 100px;
+    background: var(--card-dark);
+}
+
+.light-theme-preview .preview-content {
+    background: var(--card-light);
+}
+
+.theme-option span {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+body.light-theme .theme-option span {
+    color: var(--text-light);
+}
+
+.preference-option {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+body.light-theme .preference-option {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.preference-option:last-child {
+    border-bottom: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-dark);
+}
+
+body.light-theme input:checked + .slider {
+    background-color: var(--accent-light);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.preference-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+}
+
+body.light-theme .preference-info h3 {
+    color: var(--text-light);
+}
+
+.preference-info p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.light-theme .preference-info p {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.account-settings {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.avatar-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--accent-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+}
+
+body.light-theme .avatar-preview {
+    background: var(--accent-light);
+}
+
+.upload-btn {
+    background: var(--accent-dark);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+body.light-theme .upload-btn {
+    background: var(--accent-light);
+}
+
+.upload-btn:hover {
+    background: var(--accent-dark-hover);
+}
+
+body.light-theme .upload-btn:hover {
+    background: var(--accent-light-hover);
+}
+
+.account-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+body.light-theme .form-group label {
+    color: var(--text-light);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-dark);
+    background: var(--primary-dark);
+    color: var(--text-dark);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+body.light-theme .form-group input,
+body.light-theme .form-group select {
+    border: 1px solid var(--border-light);
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-dark);
+}
+
+body.light-theme .form-group input:focus,
+body.light-theme .form-group select:focus {
+    border-color: var(--accent-light);
+}
+
+/* ====== RESPONSIVE STYLES ====== */
 @media (max-width: 992px) {
-    .video-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 1fr);
-        height: auto;
-        min-height: 80vh;
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
     
-    .video-container {
-        height: 300px;
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    .connections-content {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 }
 
 @media (max-width: 768px) {
-    :root {
-        --sidebar-width: 240px;
-    }
-    
-    .logo {
-        font-size: 1.5rem;
-    }
-    
-    .welcome-text {
-        font-size: 1.6rem;
-    }
-    
-    .page-title {
-        font-size: 1.8rem;
-    }
-    
-    .add-account {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 576px) {
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .home-content, .connections-content {
-        padding: 25px 15px;
-    }
-    
-    .stat-card {
-        padding: 20px 15px;
-    }
-    
-    .stat-value {
-        font-size: 2.3rem;
-    }
-    
-    .social-platform {
-        padding: 15px;
-    }
-    
-    .platform-header i {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-    }
-    
-    .platform-header h3 {
-        font-size: 1.3rem;
+    .logo span {
+        display: none;
     }
     
     .page-header {
@@ -1312,8 +3026,47 @@ main {
     .refresh-btn {
         align-self: flex-start;
     }
+    
+    .appearance-options {
+        flex-direction: column;
+    }
+    
+    .account-settings {
+        flex-direction: column;
+    }
+    
+    .posts-columns-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding: 20px 15px;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    .settings-section {
+        padding: 20px;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 10px 12px;
+    }
+    
+    .add-account {
+        flex-direction: column;
+    }
+    
+    .add-account button {
+        width: 100%;
+    }
 } 
 ================================================= 
-END OF FILE: styles_css.css 
+END OF FILE: styles.css 
 ================================================= 
 ===== END OF FILE CONTENTS ===== 

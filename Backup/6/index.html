@@ -36,7 +36,6 @@
         <div class="sidebar-header">
             <div class="sidebar-controls">
                 <i class="fas fa-thumbtack" title="Pin sidebar"></i>
-                <i class="fas fa-times sidebar-close-btn" title="Close sidebar"></i>
             </div>
         </div>
         <div class="sidebar-menu">
@@ -157,9 +156,9 @@
             <div class="page-header">
                 <h1 class="page-title">Social Media Connections</h1>
             </div>
-            <div class="connections-content redesigned-connections">
+            <div class="connections-content">
                 <!-- YouTube Connections -->
-                <div class="social-platform platform-youtube">
+                <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-youtube"></i>
                         <h3>YouTube Channels</h3>
@@ -167,58 +166,69 @@
                     <div class="platform-description">
                         Add YouTube channel IDs to automatically fetch live streams
                     </div>
-                    <div class="account-list" id="youtube-accounts"></div>
+                    <div class="account-list" id="youtube-accounts">
+                        <!-- Accounts will be populated by JavaScript -->
+                    </div>
                     <div class="add-account">
-                        <input type="text" id="youtube-input" placeholder="Enter YouTube channel ID (e.g. UCQXWP4gEdEwlb6vodwrU75A)">
-                        <button id="add-youtube">+ Add Channel</button>
+                        <input type="text" id="youtube-input"
+                            placeholder="Enter YouTube channel ID (e.g. UC6VkhPuCCwR_kG0GExjoozg)">
+                        <button id="add-youtube"><i class="fas fa-plus"></i> Add Channel</button>
                     </div>
                 </div>
 
                 <!-- Instagram Connections -->
-                <div class="social-platform platform-instagram">
+                <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-instagram"></i>
                         <h3>Instagram Accounts</h3>
                     </div>
-                    <div class="platform-description">
-                        Add Instagram usernames to track posts and stories
+                    <div class="account-list" id="instagram-accounts">
+                        <div class="account-item">
+                            <input type="text" placeholder="Enter Instagram username" value="swaminarayan_official"
+                                readonly>
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
                     </div>
-                    <div class="account-list" id="instagram-accounts"></div>
                     <div class="add-account">
                         <input type="text" id="instagram-input" placeholder="Enter Instagram username">
-                        <button id="add-instagram">+ Add Account</button>
+                        <button id="add-instagram"><i class="fas fa-plus"></i> Add Account</button>
                     </div>
                 </div>
 
                 <!-- Facebook Connections -->
-                <div class="social-platform platform-facebook">
+                <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-facebook"></i>
                         <h3>Facebook Pages</h3>
                     </div>
-                    <div class="platform-description">
-                        Add Facebook page IDs to track posts and events
+                    <div class="account-list" id="facebook-accounts">
+                        <div class="account-item">
+                            <input type="text" placeholder="Enter Facebook page ID" value="BAPSSwaminarayanSanstha"
+                                readonly>
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
                     </div>
-                    <div class="account-list" id="facebook-accounts"></div>
                     <div class="add-account">
                         <input type="text" id="facebook-input" placeholder="Enter Facebook page ID">
-                        <button id="add-facebook">+ Add Page</button>
+                        <button id="add-facebook"><i class="fas fa-plus"></i> Add Page</button>
                     </div>
                 </div>
 
-                <!-- Twitter/X Connections -->
-                <div class="social-platform platform-twitter">
+                <!-- Twitter Connections -->
+                <div class="social-platform">
                     <div class="platform-header">
                         <i class="fab fa-twitter"></i>
                         <h3>Twitter Accounts</h3>
                     </div>
-                    <div class="platform-description">
-                        Add Twitter/X handles to track tweets
+                    <div class="account-list" id="twitter-accounts">
+                        <div class="account-item">
+                            <input type="text" placeholder="Enter Twitter handle" value="TheCensorTalk" readonly>
+                            <button class="remove-btn"><i class="fas fa-times"></i></button>
+                        </div>
                     </div>
-                    <div class="account-list" id="twitter-accounts"></div>
                     <div class="add-account">
                         <input type="text" id="twitter-input" placeholder="Enter Twitter handle">
-                        <button id="add-twitter">+ Add Account</button>
+                        <button id="add-twitter"><i class="fas fa-plus"></i> Add Account</button>
                     </div>
                 </div>
 
