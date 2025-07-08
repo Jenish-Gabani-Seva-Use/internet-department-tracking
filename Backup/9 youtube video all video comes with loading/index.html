@@ -92,16 +92,6 @@
 
     <div class="sidebar-overlay"></div>
 
-    <!-- PIN Modal -->
-    <div id="pin-modal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-      <div style="background:#222; color:#fff; padding:32px 24px; border-radius:12px; min-width:320px; box-shadow:0 8px 32px rgba(0,0,0,0.25); display:flex; flex-direction:column; align-items:center;">
-        <h2 style="margin-bottom:18px; font-size:1.3rem;">Enter PIN to access Connections</h2>
-        <input id="pin-input" type="password" maxlength="8" style="padding:10px 16px; font-size:1.1rem; border-radius:8px; border:1px solid #555; margin-bottom:16px; width:100%; text-align:center;" autofocus />
-        <div id="pin-error" style="color:#e74c3c; min-height:22px; font-size:0.98rem; margin-bottom:10px;"></div>
-        <button id="pin-submit" style="background:#3498db; color:#fff; border:none; border-radius:8px; padding:10px 24px; font-size:1rem; cursor:pointer;">Submit</button>
-      </div>
-    </div>
-
     <main>
         <!-- Dashboard Page -->
         <div class="page active" id="home">
@@ -173,46 +163,6 @@
                 <h1 class="page-title">Social Media Connections</h1>
             </div>
             <div class="connections-content redesigned-connections">
-    <!-- Live TV Fetching Mode Dropdown -->
-    <div class="live-tv-fetching-options" style="width:100%;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:flex-start;background:var(--card-dark);padding:18px 24px;border-radius:12px;box-shadow:var(--card-shadow);">
-      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;width:100%;justify-content:center;">
-        <label for="live-tv-fetching-mode" style="font-weight:600;font-size:1.1rem;">Live TV Fetching:</label>
-        <select id="live-tv-fetching-mode" style="padding:9px 18px;border-radius:8px;font-size:1rem;background:var(--primary-dark);color:var(--text-dark);border:1px solid var(--border-dark);font-weight:500;">
-          <option value="channel" selected>From Channel</option>
-          <option value="fixed">From Fixed Videos</option>
-        </select>
-      </div>
-    </div>
-    <!-- YouTube Video Load Options (unchanged, but moved below) -->
-    <div class="video-load-options" style="width:100%;margin-bottom:32px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:flex-start;background:var(--card-dark);padding:18px 24px;border-radius:12px;box-shadow:var(--card-shadow);">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%;justify-content:center;">
-        <label style="font-weight:600;font-size:1.1rem;">YouTube Videos Load:</label>
-        <select id="video-load-method" style="padding:9px 18px;border-radius:8px;font-size:1rem;background:var(--primary-dark);color:var(--text-dark);border:1px solid var(--border-dark);font-weight:500;">
-          <option value="scroll">With Scrolling</option>
-          <option value="button" selected>With Button</option>
-        </select>
-        <select id="video-load-limit-type" style="padding:9px 18px;border-radius:8px;font-size:1rem;background:var(--primary-dark);color:var(--text-dark);border:1px solid var(--border-dark);font-weight:500;">
-          <option value="all">All Videos</option>
-          <option value="limited" selected>Limited Videos</option>
-        </select>
-        <span id="video-limit-input-wrap" style="display:inline-flex;align-items:center;gap:6px;">
-          <label for="video-limit-input" style="font-weight:500;">Limit:</label>
-          <input id="video-limit-input" type="number" min="1" max="9999" value="15" style="width:70px;padding:9px 10px;border-radius:8px;font-size:1rem;background:var(--primary-dark);color:var(--text-dark);border:1px solid var(--border-dark);">
-        </span>
-        <span style="font-weight:500;">At a time load:</span>
-        <input id="video-load-batch" type="number" min="1" max="100" value="8" style="width:60px;padding:9px 10px;border-radius:8px;font-size:1rem;background:var(--primary-dark);color:var(--text-dark);border:1px solid var(--border-dark);">
-      </div>
-    </div>
-
-    <!-- Fixed Videos Section (hidden by default) -->
-    <div id="fixed-videos-section" style="display:none;width:100%;margin-bottom:32px;background:var(--card-dark);padding:18px 24px;border-radius:12px;box-shadow:var(--card-shadow);">
-      <div style="font-weight:600;font-size:1.1rem;margin-bottom:12px;">Add YouTube Video Links for Live TV</div>
-      <div id="fixed-videos-list"></div>
-      <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
-        <input type="text" id="fixed-video-input" placeholder="Enter YouTube video link (e.g. https://www.youtube.com/watch?v=...)" style="flex:1;padding:9px 12px;border-radius:8px;font-size:1rem;background:var(--primary-dark);color:var(--text-dark);border:1px solid var(--border-dark);">
-        <button id="add-fixed-video" style="padding:9px 18px;border-radius:8px;font-size:1rem;background:var(--accent-dark);color:#fff;border:none;font-weight:500;">+ Add Video</button>
-      </div>
-    </div>
                 <!-- YouTube Connections -->
                 <div class="social-platform platform-youtube">
                     <div class="platform-header">

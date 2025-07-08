@@ -2,6 +2,7 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const sidebar = document.querySelector('.sidebar');
 const pinBtn = document.querySelector('.fa-thumbtack');
+// const closeBtn = document.querySelector('.sidebar-close-btn');
 const menuItems = document.querySelectorAll('.menu-item');
 const pages = document.querySelectorAll('.page');
 const themeToggle = document.querySelector('.theme-toggle');
@@ -9,29 +10,15 @@ const themeIcon = document.getElementById('theme-icon');
 const themeOptions = document.querySelectorAll('.theme-option');
 const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
-// Live TV Fetching Mode
-const liveTvFetchingMode = document.getElementById('live-tv-fetching-mode');
-const fixedVideosSection = document.getElementById('fixed-videos-section');
-const fixedVideosList = document.getElementById('fixed-videos-list');
-const fixedVideoInput = document.getElementById('fixed-video-input');
-const addFixedVideoBtn = document.getElementById('add-fixed-video');
-
 // YouTube channel data
 let youtubeChannels = [];
 let instagramAccounts = [];
 let facebookAccounts = [];
 let twitterAccounts = [];
-let fixedLiveVideos = [];
 // Default connections
 const DEFAULT_YOUTUBE_CHANNELS = [
     { id: 'UCQXWP4gEdEwlb6vodwrU75A', title: 'Swaminarayan Bhagwan' },
     { id: 'UC7HQ3mzdsyvLU0Y7a2t3N7A', title: 'Swaminarayan' }
-];
-const DEFAULT_FIXED_LIVE_VIDEOS = [
-    'https://www.youtube.com/watch?v=OpmL54H8YJU',
-    'https://www.youtube.com/watch?v=PJab2ScnQQs',
-    'https://www.youtube.com/watch?v=xvamYeFA574',
-    'https://www.youtube.com/watch?v=9Z39gmRScKM'
 ];
 const DEFAULT_INSTAGRAM = ['swaminarayanbhagwan_'];
 const DEFAULT_FACEBOOK = ['swaminarayanbhagwan2'];
@@ -52,47 +39,8 @@ const saveConnectionsBtn = document.getElementById('save-connections');
 const refreshBtn = document.querySelector('.refresh-btn');
 
 // YouTube Data API Key and Channel IDs
-// YouTube API keys: [0] Main, [1] Mayurbhai Api (fallback)
-const YOUTUBE_API_KEYS = [
-  'AIzaSyBLMT_7oFeo5xLWv_xQwil8wh3wmDsaZuM',
-  // Mayurbhai Api
-  'AIzaSyAQErU3GkdcmtjjNgX9RJGuWClwrXUIMLs',
-  //Jenish Gabani_Youtube Api Key Prodject
-  'AIzaSyB8PV0xxXxfBIrST_p1SDZqFBNGdfNllMg'
-];
-let currentApiKeyIndex = 0;
-
-function getYouTubeApiKey() {
-  return YOUTUBE_API_KEYS[currentApiKeyIndex];
-}
-
-// Helper: On quota error, switch to next API key and retry
-async function fetchWithApiKeyRetry(urlBuilder, options = {}) {
-  let lastError = null;
-  for (let i = 0; i < YOUTUBE_API_KEYS.length; i++) {
-    const apiKey = YOUTUBE_API_KEYS[currentApiKeyIndex];
-    const url = urlBuilder(apiKey);
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      // Quota errors: check for error.code === 403 and reason 'quotaExceeded' or 'dailyLimitExceeded'
-      if (data && data.error && data.error.errors) {
-        const err = data.error.errors[0];
-        if (err.reason === 'quotaExceeded' || err.reason === 'dailyLimitExceeded') {
-          // Switch to next key and retry
-          currentApiKeyIndex = (currentApiKeyIndex + 1) % YOUTUBE_API_KEYS.length;
-          lastError = data.error;
-          continue;
-        }
-      }
-      return data;
-    } catch (e) {
-      lastError = e;
-    }
-  }
-  throw lastError || new Error('YouTube API error');
-}
-
+const YOUTUBE_API_KEY = 'AIzaSyBLMT_7oFeo5xLWv_xQwil8wh3wmDsaZuM';
+// AIzaSyAbyRSVRcxq_8c422B95MOtY7x1okSjybs second api key
 const CHANNEL_IDS = {
     'swaminarayan-bhagwan': 'UCQXWP4gEdEwlb6vodwrU75A',
     'swaminarayan': 'UC7HQ3mzdsyvLU0Y7a2t3N7A'
@@ -108,40 +56,6 @@ const videosCache = {};
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
-    // Load saved fixed videos
-    loadFixedLiveVideos();
-    // Live TV fetching mode
-    if (liveTvFetchingMode) {
-        liveTvFetchingMode.addEventListener('change', handleLiveTvFetchingModeChange);
-        handleLiveTvFetchingModeChange();
-    }
-    if (addFixedVideoBtn) {
-        addFixedVideoBtn.addEventListener('click', addFixedLiveVideo);
-    }
-    // --- Video Load Options UI logic ---
-    const videoLoadMethod = document.getElementById('video-load-method');
-    const videoLoadLimitType = document.getElementById('video-load-limit-type');
-    const videoLimitInputWrap = document.getElementById('video-limit-input-wrap');
-    const videoLimitInput = document.getElementById('video-limit-input');
-    const videoLoadBatch = document.getElementById('video-load-batch');
-
-    // Set default options (as per user request)
-    if (videoLoadMethod) videoLoadMethod.value = 'button';
-    if (videoLoadLimitType) videoLoadLimitType.value = 'limited';
-    if (videoLimitInput) videoLimitInput.value = 10;
-    if (videoLoadBatch) videoLoadBatch.value = 5;
-    if (videoLimitInputWrap) videoLimitInputWrap.style.display = 'inline-flex';
-
-    // Show/hide limit input
-    if (videoLoadLimitType) {
-        videoLoadLimitType.addEventListener('change', function() {
-            if (this.value === 'limited') {
-                videoLimitInputWrap.style.display = 'inline-flex';
-            } else {
-                videoLimitInputWrap.style.display = 'none';
-            }
-        });
-    }
 
     // Load saved theme preference
     const savedTheme = localStorage.getItem('theme');
@@ -201,64 +115,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Set up event listeners
-function setupEventListeners() { // <-- This was missing its closing brace
+function setupEventListeners() {
     // Toggle sidebar
     menuToggle.addEventListener('click', toggleSidebar);
 
     // Pin sidebar functionality
     pinBtn.addEventListener('click', togglePinSidebar);
 
-    // Page navigation with PIN for Connections
+
+
+    // Page navigation
     menuItems.forEach(item => {
-        if (item.getAttribute('data-page') === 'connections') {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                showPinModal(() => {
-                    navigateToPage.call(item);
-                });
-            });
-        } else {
-            item.addEventListener('click', navigateToPage);
-        }
+        item.addEventListener('click', navigateToPage);
     });
-
-    function showPinModal(onSuccess) {
-        const modal = document.getElementById('pin-modal');
-        const input = document.getElementById('pin-input');
-        const error = document.getElementById('pin-error');
-        const submit = document.getElementById('pin-submit');
-        if (!modal || !input || !submit) return;
-        error.textContent = '';
-        input.value = '';
-        modal.style.display = 'flex';
-        input.focus();
-
-        function closeModal() {
-            modal.style.display = 'none';
-            submit.removeEventListener('click', submitHandler);
-            input.removeEventListener('keydown', keyHandler);
-        }
-        function submitHandler() {
-            if (input.value === '6598') {
-                closeModal();
-                if (typeof onSuccess === 'function') onSuccess();
-            } else {
-                error.textContent = 'Incorrect PIN. Please try again.';
-                input.value = '';
-                input.focus();
-            }
-        }
-        function keyHandler(e) {
-            if (e.key === 'Enter') submitHandler();
-            if (e.key === 'Escape') closeModal();
-        }
-        submit.addEventListener('click', submitHandler);
-        input.addEventListener('keydown', keyHandler);
-        // Optional: close modal on outside click
-        modal.onclick = function(e) {
-            if (e.target === modal) closeModal();
-        };
-    }
 
     // Theme toggle
     themeToggle.addEventListener('click', toggleTheme);
@@ -322,8 +191,8 @@ function setupEventListeners() { // <-- This was missing its closing brace
                 loadYouTubeUploadedVideos(channelName);
             });
         });
-    } // <-- Missing closing brace for the if statement checking channelSelectBtns.length
-} // <-- Added missing closing brace for setupEventListeners function
+    }
+}
 
 // Apply pinned state
 function applyPinnedState() {
@@ -481,16 +350,15 @@ function setTheme(theme) {
 function addYoutubeChannel() {
     const channelId = youtubeInput.value.trim();
     if (channelId && !youtubeChannels.some(c => c.id === channelId)) {
-        fetchWithApiKeyRetry(
-            (apiKey) => `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apiKey}`
-        )
+        fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${YOUTUBE_API_KEY}`)
+            .then(res => res.json())
             .then(data => {
                 if (data.items && data.items.length > 0) {
                     const channel = data.items[0];
                     youtubeChannels.push({
                         id: channelId,
-                        title: channel.snippet.title, // Changed 'name' to 'title' for consistency
-                        url: `https://www.youtube.com/channel/${channelId}` // Corrected URL
+                        name: channel.snippet.title,
+                        url: `https://www.youtube.com/channel/${channelId}`
                     });
                     renderYoutubeAccounts();
                     youtubeInput.value = '';
@@ -678,146 +546,18 @@ function loadConnections() {
     renderTwitterAccounts();
 }
 
-// Load fixed live videos
-function loadFixedLiveVideos() {
-    const savedFixed = localStorage.getItem('fixedLiveVideos');
-    if (savedFixed) {
-        try {
-            fixedLiveVideos = JSON.parse(savedFixed).filter(Boolean);
-        } catch {
-            fixedLiveVideos = [];
-        }
-    } else {
-        fixedLiveVideos = [...DEFAULT_FIXED_LIVE_VIDEOS];
-    }
-    renderFixedLiveVideos();
-}
-
-function saveFixedLiveVideos() {
-    localStorage.setItem('fixedLiveVideos', JSON.stringify(fixedLiveVideos));
-}
-
-function renderFixedLiveVideos() {
-    if (!fixedVideosList) return;
-    fixedVideosList.innerHTML = '';
-    if (!Array.isArray(fixedLiveVideos)) fixedLiveVideos = [];
-    fixedLiveVideos.forEach(async (videoUrl, idx) => {
-        if (!videoUrl) return;
-        const videoId = extractYouTubeVideoId(videoUrl);
-        const div = document.createElement('div');
-        div.className = 'video-container';
-        div.style.marginBottom = '18px';
-        if (videoId) {
-            // Show loader while fetching details
-            div.innerHTML = `
-                <div class="video-title">
-                    <i class="fas fa-circle online"></i>
-                    <span class="video-name">Loading...</span>
-                    <a href="${videoUrl}" target="_blank" style="margin-left:10px; color:var(--accent-dark); text-decoration:underline;">Open</a>
-                    <button class="remove-btn" title="Remove" data-idx="${idx}" style="margin-left:12px;background:transparent;border:none;color:#e74c3c;cursor:pointer;font-size:1.1rem;"><i class="fas fa-times"></i></button>
-                </div>
-            `;
-            fixedVideosList.appendChild(div);
-            // Fetch video details
-            try {
-                const apiKey = getYouTubeApiKey();
-                const resp = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`);
-                const data = await resp.json();
-                if (data.items && data.items.length > 0) {
-                    const snippet = data.items[0].snippet;
-                    const title = snippet.title;
-                    const channelTitle = snippet.channelTitle;
-                    div.querySelector('.video-name').textContent = `${channelTitle} - ${title}`;
-                } else {
-                    div.querySelector('.video-name').textContent = 'Video not found';
-                }
-            } catch {
-                div.querySelector('.video-name').textContent = 'Error loading details';
-            }
-        } else {
-            div.innerHTML = `<div class=\"error\">Invalid YouTube link</div>`;
-        }
-        const removeBtn = div.querySelector('.remove-btn');
-        if (removeBtn) {
-            removeBtn.onclick = function() {
-                fixedLiveVideos.splice(idx, 1);
-                saveFixedLiveVideos();
-                renderFixedLiveVideos();
-            };
-        }
-        if (!div.parentElement) fixedVideosList.appendChild(div);
-    });
-}
-
-function addFixedLiveVideo() {
-    const url = fixedVideoInput.value.trim();
-    if (url && extractYouTubeVideoId(url) && !fixedLiveVideos.includes(url)) {
-        fixedLiveVideos.push(url);
-        saveFixedLiveVideos();
-        renderFixedLiveVideos();
-        fixedVideoInput.value = '';
-    }
-}
-
-function extractYouTubeVideoId(url) {
-    // Handles various YouTube URL formats
-    const regExp = /^.*(?:https?:\/\/(?:www\.)?youtube\.com\/(?:embed\/|v\/|watch\?v=|youtu\.be\/|shorts\/|live\/)|https?:\/\/m\.youtube\.com\/watch\?v=)([^#&?\n]{11}).*/; // Corrected regex for YouTube URLs
-    const match = url.match(regExp);
-    return match && match[1] ? match[1] : null;
-}
-
-function handleLiveTvFetchingModeChange() {
-    if (!liveTvFetchingMode) return;
-    if (liveTvFetchingMode.value === 'fixed') {
-        if (fixedVideosSection) fixedVideosSection.style.display = '';
-    } else {
-        if (fixedVideosSection) fixedVideosSection.style.display = 'none';
-    }
-}
-
 // Load live streams
 async function loadLiveStreams() {
     const videoGrid = document.getElementById('live-tv-video-grid');
     if (!videoGrid) return;
     videoGrid.innerHTML = '';
 
-    // Check fetching mode
-    if (liveTvFetchingMode && liveTvFetchingMode.value === 'fixed') {
-        // Show fixed videos
-        if (fixedLiveVideos.length === 0) {
-            const div = document.createElement('div');
-            div.className = 'youtube-videos-status';
-            div.textContent = 'No fixed videos added.';
-            videoGrid.appendChild(div);
-        } else {
-            fixedLiveVideos.forEach((url) => {
-                const videoId = extractYouTubeVideoId(url);
-                if (videoId) {
-                    const container = document.createElement('div');
-                    container.className = 'video-container';
-                    container.innerHTML = `
-                        <div class="video-frame">
-                            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-title">
-                            <i class="fas fa-circle online"></i>
-                            <span class="video-name">${url}</span>
-                        </div>
-                    `;
-                    videoGrid.appendChild(container);
-                }
-            });
-        }
-        return;
-    }
-
-    // Use the YouTube channels from connections (default)
+    // Use the YouTube channels from connections
     for (const channel of youtubeChannels) {
         try {
             // Fetch all live events for this channel
-            const searchData = await fetchWithApiKeyRetry(
-                (apiKey) => `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel.id}&eventType=live&type=video&maxResults=5&key=${apiKey}`
-            );
+            const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channel.id}&eventType=live&type=video&maxResults=5&key=${YOUTUBE_API_KEY}`);
+            const searchData = await searchRes.json();
             if (searchData.items && searchData.items.length > 0) {
                 for (const live of searchData.items) {
                     const videoId = live.id.videoId;
@@ -830,7 +570,7 @@ async function loadLiveStreams() {
                         </div>
                         <div class="video-title">
                             <i class="fas fa-circle online"></i>
-                            <span class="video-name">${channel.title || channel.id} - ${title}</span>
+                            <span class="video-name">${channel.name || channel.id} - ${title}</span>
                         </div>
                     `;
                     videoGrid.appendChild(container);
@@ -845,29 +585,21 @@ async function loadLiveStreams() {
                     </div>
                     <div class="video-title">
                         <i class="fas fa-circle offline"></i>
-                        <span class="video-name">${channel.title || channel.id}</span>
+                        <span class="video-name">${channel.name || channel.id}</span>
                     </div>
                 `;
                 videoGrid.appendChild(container);
             }
         } catch (e) {
-            let errorMsg = 'Error loading live event';
-            if (e && e.error && e.error.message) {
-                errorMsg += `: ${e.error.message}`;
-            } else if (e && e.message) {
-                errorMsg += `: ${e.message}`;
-            } else if (typeof e === 'string') {
-                errorMsg += `: ${e}`;
-            }
             const container = document.createElement('div');
             container.className = 'video-container';
             container.innerHTML = `
                 <div class="video-frame">
-                    <div class='error' style='padding:20px;text-align:center;'>${errorMsg}</div>
+                    <div class='error' style='padding:20px;text-align:center;'>Error loading live event</div>
                 </div>
                 <div class="video-title">
                     <i class="fas fa-circle offline"></i>
-                    <span class="video-name">${channel.title || channel.id}</span>
+                    <span class="video-name">${channel.name || channel.id}</span>
                 </div>
             `;
             videoGrid.appendChild(container);
@@ -883,9 +615,8 @@ function loadYouTubePosts() {
     bhagwanPostsContainer.innerHTML = '';
     swaminarayanPostsContainer.innerHTML = '';
 
-    // Corrected URLs for community tabs
-    const bhagwanChannelUrl = `https://www.youtube.com/channel/${CHANNEL_IDS['swaminarayan-bhagwan']}/community`;
-    const swaminarayanChannelUrl = `https://www.youtube.com/channel/${CHANNEL_IDS['swaminarayan']}/community`;
+    const bhagwanChannelUrl = "https://www.youtube.com/channel/UCQXWP4gEdEwlb6vodwrU75A/community";
+    const swaminarayanChannelUrl = "https://www.youtube.com/channel/UC7HQ3mzdsyvLU0Y7a2t3N7A/community";
 
     bhagwanPostsContainer.innerHTML = `
         <div class="error" style="text-align: center; padding: 20px;">
@@ -941,32 +672,37 @@ async function loadYouTubeUploadedVideos(channelName, loadMore = false) {
     }
 
     try {
-        const channelData = await fetchWithApiKeyRetry(
-            (apiKey) => `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}`
-        );
+        const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${YOUTUBE_API_KEY}`);
+        if (!channelResponse.ok) {
+            const errorText = await channelResponse.text();
+            throw new Error(`HTTP error! status: ${channelResponse.status}, message: ${errorText}`);
+        }
+        const channelData = await channelResponse.json();
         const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
 
-        let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${uploadsPlaylistId}&key=${getYouTubeApiKey()}&maxResults=12`;
+        let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${uploadsPlaylistId}&key=${YOUTUBE_API_KEY}&maxResults=12`;
         if (nextPageTokens[channelName]) {
             url += `&pageToken=${nextPageTokens[channelName]}`;
         }
 
-        const videosData = await fetchWithApiKeyRetry(
-            (apiKey) => url.replace(/key=[^&]+/, `key=${apiKey}`)
-        );
+        const videosResponse = await fetch(url);
+        if (!videosResponse.ok) {
+            const errorText = await videosResponse.text();
+            throw new Error(`HTTP error! status: ${videosResponse.status}, message: ${errorText}`);
+        }
+        const videosData = await videosResponse.json();
 
         const videoIds = videosData.items.map(item => item.contentDetails.videoId).join(',');
         let videoStats = {};
         if (videoIds) {
-            const statsData = await fetchWithApiKeyRetry(
-                (apiKey) => `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${apiKey}`
-            );
-            if (statsData.items) {
+            const statsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${YOUTUBE_API_KEY}`);
+            if (statsResponse.ok) {
+                const statsData = await statsResponse.json();
                 statsData.items.forEach(item => {
                     videoStats[item.id] = item.statistics;
                 });
             } else {
-                console.warn("Could not fetch video statistics");
+                console.warn("Could not fetch video statistics:", statsResponse.statusText);
             }
         }
 
@@ -985,7 +721,7 @@ async function loadYouTubeUploadedVideos(channelName, loadMore = false) {
         }
 
         // Always render all cached videos for this channel
-        renderYouTubeVideos(containerId, videosCache[channelName], videoStats, true); // Pass videoStats here
+        renderYouTubeVideos(containerId, videosCache[channelName], null, true);
 
     } catch (error) {
         console.error('Error fetching YouTube videos:', error);
@@ -993,12 +729,12 @@ async function loadYouTubeUploadedVideos(channelName, loadMore = false) {
             loader.remove();
         }
         let errorMessage = 'Failed to load videos. This could be due to API key issues, network problems, or too many requests.';
-        if (error && error.error && error.error.message) {
-            errorMessage += `<br><b>API Error:</b> ${error.error.message}`;
-        } else if (error && error.message) {
-            errorMessage += `<br><b>Error:</b> ${error.message}`;
-        } else if (typeof error === 'string') {
-            errorMessage += `<br><b>Error:</b> ${error}`;
+        if (error.message.includes('Quota exceeded')) {
+            errorMessage = 'YouTube API daily quota exceeded. Please try again tomorrow.';
+        } else if (error.message.includes('Invalid API key')) {
+            errorMessage = 'Invalid YouTube API Key. Please check your key in script.js.';
+        } else if (error.message.includes('Forbidden')) {
+            errorMessage = 'Access to YouTube API forbidden. Check API key restrictions or channel privacy.';
         }
         container.innerHTML += `<div class="error" style="padding: 20px;">${errorMessage}</div>`;
     } finally {
@@ -1014,86 +750,40 @@ function renderYouTubeVideos(containerId, videos, videoStats, append = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Get options
-    const method = document.getElementById('video-load-method')?.value || 'scroll';
-    const limitType = document.getElementById('video-load-limit-type')?.value || 'all';
-    const limit = limitType === 'limited' ? parseInt(document.getElementById('video-limit-input')?.value || '100', 10) : null;
-    const batch = parseInt(document.getElementById('video-load-batch')?.value || '12', 10);
-
     // Only clear container if not appending
     if (!append) container.innerHTML = '';
 
-    // Remove any previous messages
-    const oldMsg = container.querySelector('.video-limit-msg, .no-more-videos-message');
-    if (oldMsg) oldMsg.remove();
+    const hasExistingContent = container.children.length > 0 && !container.querySelector('.error');
 
-    // Determine how many videos to show
-    let showCount = videos.length;
-    if (limitType === 'limited' && limit && videos.length > limit) {
-        showCount = limit;
-    }
-
-    // For button mode, only show up to batch (or next batch)
-    let alreadyShown = container.querySelectorAll('.youtube-video-item').length;
-    let toShow = showCount - alreadyShown;
-    if (method === 'button') {
-        toShow = Math.min(batch, toShow);
-    }
-
-    // If no videos at all
-    if (videos.length === 0 && !append) {
+    if (!hasExistingContent && videos.length === 0) {
         container.innerHTML = `<div class="error" style="text-align: center; padding: 20px;">No uploaded videos found for this channel or embedding is restricted.</div>`;
         return;
     }
 
-    // Render videos
-    for (let i = alreadyShown; i < alreadyShown + toShow && i < showCount; i++) {
-        const video = videos[i];
-        const videoId = video.contentDetails.videoId;
-        const title = video.snippet.title;
-        const thumbnailUrl = video.snippet.thumbnails.medium.url;
-        const publishedAt = new Date(video.snippet.publishedAt);
-        const relativeTime = timeAgo(publishedAt);
-        const viewCount = videoStats && videoStats[videoId] ? formatNumber(videoStats[videoId].viewCount) : 'N/A';
+    if (videos && videos.length > 0) {
+        videos.forEach(video => {
+            const videoId = video.contentDetails.videoId;
+            const title = video.snippet.title;
+            const thumbnailUrl = video.snippet.thumbnails.medium.url;
+            const publishedAt = new Date(video.snippet.publishedAt);
+            const relativeTime = timeAgo(publishedAt);
+            const viewCount = videoStats && videoStats[videoId] ? formatNumber(videoStats[videoId].viewCount) : 'N/A';
 
-        const videoItem = document.createElement('div');
-        videoItem.className = 'youtube-video-item';
-        videoItem.innerHTML = `
-            <img src="${thumbnailUrl}" alt="${title}">
-            <div class="youtube-video-item-info">
-                <h3>${title}</h3>
-                <p>Published: ${relativeTime}</p>
-                <p>Views: ${viewCount}</p>
-                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">Watch Video <i class="fas fa-external-link-alt"></i></a>
-            </div>
-        `;
-        container.appendChild(videoItem);
-    }
-
-    // Show Load More button if needed
-    let loadMoreBtn = container.querySelector('.youtube-load-more-btn');
-    if (loadMoreBtn) loadMoreBtn.remove();
-    if (method === 'button' && alreadyShown + toShow < showCount) {
-        loadMoreBtn = document.createElement('button');
-        loadMoreBtn.className = 'youtube-load-more-btn';
-        loadMoreBtn.textContent = 'Load More';
-        loadMoreBtn.onclick = function() {
-            renderYouTubeVideos(containerId, videos, videoStats, true);
-        };
-        container.appendChild(loadMoreBtn);
-    }
-
-    // Show limit message if reached
-    if (limitType === 'limited' && alreadyShown + toShow >= showCount) {
-        const msg = document.createElement('div');
-        msg.className = 'video-limit-msg';
-        msg.style = 'color: var(--danger); text-align: center; margin: 18px 0; font-weight: 600;';
-        msg.textContent = 'Video limit reached';
-        container.appendChild(msg);
-    }
-    
-    // Only show "no more videos" message when not in limited mode
-    if (limitType !== 'limited' && nextPageTokens[channelName.replace('-videos', '')] === null) {
+            const videoItem = document.createElement('div');
+            videoItem.className = 'youtube-video-item';
+            videoItem.innerHTML = `
+                <img src="${thumbnailUrl}" alt="${title}">
+                <div class="youtube-video-item-info">
+                    <h3>${title}</h3>
+                    <p>Published: ${relativeTime}</p>
+                    <p>Views: ${viewCount}</p>
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">Watch Video <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            `;
+            container.appendChild(videoItem);
+        });
+    } else if (nextPageTokens[containerId.replace('-videos', '')] === null) {
+        // If no more videos and next page token is null, indicate end of content
         if (!container.querySelector('.no-more-videos-message')) {
             const noMoreVideosDiv = document.createElement('div');
             noMoreVideosDiv.className = 'error no-more-videos-message';
@@ -1132,166 +822,24 @@ function timeAgo(date) {
     return Math.floor(seconds) + " seconds ago";
 }
 
-// Infinite scroll for YouTube videos
-function setupYouTubeInfiniteScroll() {
-    const videosPage = document.getElementById('youtube-videos');
-    if (!videosPage) return;
-    let loading = false;
-    window.addEventListener('scroll', async function onScroll() {
-        if (!videosPage.classList.contains('active')) return;
-        
-        // Check loading method - skip if using button method
-        const method = document.getElementById('video-load-method')?.value;
-        if (method === 'button') return;
-        
-        const activeGrid = document.querySelector('.video-display-grid.active');
-        if (!activeGrid) return;
-        const rect = activeGrid.getBoundingClientRect();
-        if (loading) return;
-        // If user scrolled near the bottom of the grid (200px from bottom)
-        if (rect.bottom - window.innerHeight < 200) {
-            loading = true;
-            // Find which channel is active
-            const activeBtn = document.querySelector('.channel-select-btn.active');
-            if (activeBtn) {
-                const channelName = activeBtn.getAttribute('data-channel-name');
-                await loadYouTubeUploadedVideos(channelName, true); // true = load more
-            }
-            loading = false;
-        }
-    });
-}
-
-// --- Live TV / Upcoming Events Tab Logic ---
-function setupLiveTvTabs() {
-    const liveTvTabBtn = document.querySelector('.live-tv-tab-btn[data-tab="live"]');
-    const upcomingTabBtn = document.querySelector('.live-tv-tab-btn[data-tab="upcoming"]');
-    const liveGrid = document.getElementById('live-tv-video-grid');
-    const upcomingGrid = document.getElementById('upcoming-events-grid');
-    if (!liveTvTabBtn || !upcomingTabBtn || !liveGrid || !upcomingGrid) return;
-    liveTvTabBtn.addEventListener('click', function() {
-        liveTvTabBtn.classList.add('active');
-        upcomingTabBtn.classList.remove('active');
-        liveGrid.classList.add('active');
-        liveGrid.style.display = '';
-        upcomingGrid.classList.remove('active');
-        upcomingGrid.style.display = 'none';
-    });
-    upcomingTabBtn.addEventListener('click', function() {
-        liveTvTabBtn.classList.remove('active');
-        upcomingTabBtn.classList.add('active');
-        liveGrid.classList.remove('active');
-        liveGrid.style.display = 'none';
-        upcomingGrid.classList.add('active');
-        upcomingGrid.style.display = '';
-        loadUpcomingEvents();
-    });
-}
-
-// --- Fetch and Render Upcoming YouTube Events ---
-async function fetchUpcomingEventsForChannel(channelId) {
-    // Use API key with fallback
-    const data = await fetchWithApiKeyRetry(
-      (apiKey) => `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=upcoming&type=video&order=date&key=${apiKey}`
-    );
-    if (!data.items) return [];
-    // Filter out events that are not truly upcoming (by checking scheduledStartTime)
-    const now = new Date();
-    const events = [];
-    for (const item of data.items) {
-        // Get video details for scheduled start time
-        const videoId = item.id.videoId;
-        const detailsData = await fetchWithApiKeyRetry(
-          (apiKey) => `https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails,snippet&id=${videoId}&key=${apiKey}`
-        );
-        if (detailsData.items && detailsData.items.length > 0) {
-            const video = detailsData.items[0];
-            const scheduled = video.liveStreamingDetails && video.liveStreamingDetails.scheduledStartTime;
-            if (scheduled && new Date(scheduled) > now) {
-                // Avoid duplicates by videoId
-                events.push({
-                    id: videoId,
-                    title: video.snippet.title,
-                    date: scheduled,
-                    thumb: video.snippet.thumbnails && (video.snippet.thumbnails.high?.url || video.snippet.thumbnails.medium?.url || video.snippet.thumbnails.default?.url),
-                    url: `https://www.youtube.com/watch?v=${videoId}` // Corrected URL
-                });
-            }
-        }
-    }
-    return events;
-}
-
-async function loadUpcomingEvents() {
-    const grid = document.getElementById('upcoming-events-grid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    // Use all connected YouTube channels
-    let allEvents = [];
-    const seenIds = new Set();
-    const eventChannelMap = {};
-    
-    // Create a map to track events by their unique videoId
-    const eventMap = new Map();
-
-    for (const channel of youtubeChannels) {
-        const events = await fetchUpcomingEventsForChannel(channel.id);
-        for (const ev of events) {
-            // Use video ID as unique key
-            const eventKey = ev.id;
-            if (!eventMap.has(eventKey)) {
-                eventMap.set(eventKey, ev);
-                eventChannelMap[eventKey] = channel;
-            } else {
-                // If duplicate, prefer the channel with a more descriptive name (not just id)
-                const existingChannel = eventChannelMap[eventKey];
-                if (
-                    (!existingChannel.name && (channel.name || channel.title)) ||
-                    (existingChannel.id === eventKey && (channel.name || channel.title))
-                ) {
-                    eventChannelMap[eventKey] = channel;
-                }
-            }
-        }
-    }
-    
-    // Convert map values to array
-    allEvents = Array.from(eventMap.values());
-    
-    // Sort by soonest date
-    allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-    // Sort by soonest date
-    allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-    if (allEvents.length === 0) {
-        grid.innerHTML = `<div class="error" style="text-align:center;padding:30px;">No upcoming events found.</div>`;
+// Function to handle infinite scroll
+function handleInfiniteScroll() {
+    const youtubeVideosPage = document.getElementById('youtube-videos');
+    if (!youtubeVideosPage || !youtubeVideosPage.classList.contains('active')) {
         return;
     }
-    // Render event cards in YouTube video card style (match .youtube-video-item)
-    for (const ev of allEvents) {
-        const channel = eventChannelMap[ev.id];
-        const card = document.createElement('div');
-        card.className = 'youtube-video-item';
-        card.style.width = '260px';
-        card.style.margin = '0 16px 24px 0';
-        card.innerHTML = `
-            <img src="${ev.thumb || ''}" alt="${ev.title}" style="width:100%;height:180px;object-fit:cover;display:block;">
-            <div class="youtube-video-item-info">
-                <h3 style="font-size:1.05rem;max-height:2.8em;overflow:hidden;text-overflow:ellipsis;white-space:normal;line-height:1.35;">${ev.title}</h3>
-                <p style="font-size:0.95rem;">Scheduled: ${new Date(ev.date).toLocaleString()}</p>
-                <div style="font-size:0.93rem;color:#7ec1ff;margin-bottom:4px;">Channel: <span style="font-weight:600;">${channel && (channel.name || channel.title || channel.id)}</span></div>
-                <a href="${ev.url}" target="_blank">Watch on YouTube <i class='fas fa-external-link-alt'></i></a>
-            </div>
-        `;
-        grid.appendChild(card);
+
+    const { scrollTop, scrollHeight, clientHeight } = youtubeVideosPage;
+
+    if (scrollTop + clientHeight >= scrollHeight - 100 &&
+        currentLoadingChannel &&
+        nextPageTokens[currentLoadingChannel] !== null &&
+        !youtubeVideosPage.dataset.loading
+    ) {
+        youtubeVideosPage.dataset.loading = 'true';
+        loadYouTubeUploadedVideos(currentLoadingChannel);
     }
 }
-
-// --- Call setupLiveTvTabs in DOMContentLoaded ---
-document.addEventListener('DOMContentLoaded', () => {
-    // ...existing code...
-    setupLiveTvTabs();
-    // ...existing code...
-});
 
 // Function to load social media widgets
 function loadSocialMediaWidgets() {
@@ -1360,8 +908,7 @@ function loadTwitterWidget() {
     twitterContainer.innerHTML = '';
     const twitterTimeline = document.createElement('a');
     twitterTimeline.className = 'twitter-timeline';
-    // Consider making this dynamic based on twitterAccounts if multiple are expected
-    twitterTimeline.href = 'https://x.com/TheCensorTalk'; // Kept as is, as it's not a syntax error
+    twitterTimeline.href = 'https://x.com/TheCensorTalk';
     twitterTimeline.textContent = 'Tweets by TheCensorTalk';
     twitterTimeline.setAttribute('data-width', '100%');
     twitterTimeline.setAttribute('data-height', '500');
@@ -1378,3 +925,133 @@ function loadTwitterWidget() {
     script.charset = 'utf-8';
     document.body.appendChild(script);
 }
+
+// Infinite scroll for YouTube videos
+function setupYouTubeInfiniteScroll() {
+    const videosPage = document.getElementById('youtube-videos');
+    if (!videosPage) return;
+    let loading = false;
+    window.addEventListener('scroll', async function onScroll() {
+        if (!videosPage.classList.contains('active')) return;
+        const activeGrid = document.querySelector('.video-display-grid.active');
+        if (!activeGrid) return;
+        const rect = activeGrid.getBoundingClientRect();
+        if (loading) return;
+        // If user scrolled near the bottom of the grid (200px from bottom)
+        if (rect.bottom - window.innerHeight < 200) {
+            loading = true;
+            // Find which channel is active
+            const activeBtn = document.querySelector('.channel-select-btn.active');
+            if (activeBtn) {
+                const channelName = activeBtn.getAttribute('data-channel-name');
+                await loadYouTubeUploadedVideos(channelName, true); // true = load more
+            }
+            loading = false;
+        }
+    });
+}
+
+// --- Live TV / Upcoming Events Tab Logic ---
+function setupLiveTvTabs() {
+    const liveTvTabBtn = document.querySelector('.live-tv-tab-btn[data-tab="live"]');
+    const upcomingTabBtn = document.querySelector('.live-tv-tab-btn[data-tab="upcoming"]');
+    const liveGrid = document.getElementById('live-tv-video-grid');
+    const upcomingGrid = document.getElementById('upcoming-events-grid');
+    if (!liveTvTabBtn || !upcomingTabBtn || !liveGrid || !upcomingGrid) return;
+    liveTvTabBtn.addEventListener('click', function() {
+        liveTvTabBtn.classList.add('active');
+        upcomingTabBtn.classList.remove('active');
+        liveGrid.classList.add('active');
+        liveGrid.style.display = '';
+        upcomingGrid.classList.remove('active');
+        upcomingGrid.style.display = 'none';
+    });
+    upcomingTabBtn.addEventListener('click', function() {
+        liveTvTabBtn.classList.remove('active');
+        upcomingTabBtn.classList.add('active');
+        liveGrid.classList.remove('active');
+        liveGrid.style.display = 'none';
+        upcomingGrid.classList.add('active');
+        upcomingGrid.style.display = '';
+        loadUpcomingEvents();
+    });
+}
+
+// --- Fetch and Render Upcoming YouTube Events ---
+async function fetchUpcomingEventsForChannel(channelId) {
+    // Fetch upcoming events for a channel using YouTube API
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=upcoming&type=video&order=date&key=${YOUTUBE_API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (!data.items) return [];
+    // Filter out events that are not truly upcoming (by checking scheduledStartTime)
+    const now = new Date();
+    const events = [];
+    for (const item of data.items) {
+        // Get video details for scheduled start time
+        const videoId = item.id.videoId;
+        const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails,snippet&id=${videoId}&key=${YOUTUBE_API_KEY}`;
+        const detailsResp = await fetch(detailsUrl);
+        const detailsData = await detailsResp.json();
+        if (detailsData.items && detailsData.items.length > 0) {
+            const video = detailsData.items[0];
+            const scheduled = video.liveStreamingDetails && video.liveStreamingDetails.scheduledStartTime;
+            if (scheduled && new Date(scheduled) > now) {
+                // Avoid duplicates by videoId
+                events.push({
+                    id: videoId,
+                    title: video.snippet.title,
+                    date: scheduled,
+                    thumb: video.snippet.thumbnails && (video.snippet.thumbnails.high?.url || video.snippet.thumbnails.medium?.url || video.snippet.thumbnails.default?.url),
+                    url: `https://www.youtube.com/watch?v=${videoId}`
+                });
+            }
+        }
+    }
+    return events;
+}
+
+async function loadUpcomingEvents() {
+    const grid = document.getElementById('upcoming-events-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    // Use all connected YouTube channels
+    let allEvents = [];
+    const seenIds = new Set();
+    for (const channel of youtubeChannels) {
+        const events = await fetchUpcomingEventsForChannel(channel.id);
+        for (const ev of events) {
+            if (!seenIds.has(ev.id)) {
+                allEvents.push(ev);
+                seenIds.add(ev.id);
+            }
+        }
+    }
+    // Sort by soonest date
+    allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+    if (allEvents.length === 0) {
+        grid.innerHTML = `<div class="error" style="text-align:center;padding:30px;">No upcoming events found.</div>`;
+        return;
+    }
+    // Render event cards in YouTube video card style
+    for (const ev of allEvents) {
+        const card = document.createElement('div');
+        card.className = 'event-card';
+        card.innerHTML = `
+            <img class="event-card-thumb" src="${ev.thumb || ''}" alt="${ev.title}">
+            <div class="event-card-info">
+                <div class="event-card-title">${ev.title}</div>
+                <div class="event-card-date">${new Date(ev.date).toLocaleString()}</div>
+                <a class="event-card-link" href="${ev.url}" target="_blank">Watch on YouTube <i class='fas fa-external-link-alt'></i></a>
+            </div>
+        `;
+        grid.appendChild(card);
+    }
+}
+
+// --- Call setupLiveTvTabs in DOMContentLoaded ---
+document.addEventListener('DOMContentLoaded', () => {
+    // ...existing code...
+    setupLiveTvTabs();
+    // ...existing code...
+});
