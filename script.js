@@ -56,6 +56,7 @@ const videosCache = {};
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
+
     // Load saved theme preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
@@ -63,25 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('light-theme');
         themeIcon.classList.remove('fa-moon');
         themeIcon.classList.add('fa-sun');
-        
         // Update theme options
         themeOptions[0].classList.remove('active');
         themeOptions[1].classList.add('active');
     }
 
-    // Load saved pin state
-  // Add this to DOMContentLoaded
-const savedPinState = localStorage.getItem('sidebarPinned');
-if (savedPinState === 'true') {
-    isPinned = true;
-    applyPinnedState();
-} else if (savedPinState === 'false') {
-    isPinned = false;
-    applyUnpinnedState();
-} else {
-    isPinned = true;
-    applyPinnedState();
-}
+    // Sidebar pin state: default to pinned on first load
+    const savedPinState = localStorage.getItem('sidebarPinned');
+    if (savedPinState === 'false') {
+        isPinned = false;
+        applyUnpinnedState();
+    } else {
+        // Default: pinned (true or null)
+        isPinned = true;
+        applyPinnedState();
+    }
 
     // Load saved connections
     loadConnections();
@@ -205,14 +202,15 @@ function applyPinnedState() {
     pinBtn.style.transform = 'rotate(45deg)';
     // Always remove overlay and no-scroll when pinning
     sidebarOverlay.classList.remove('active');
-    sidebarOverlay.style.opacity = '';
-    sidebarOverlay.style.visibility = '';
+    sidebarOverlay.style.opacity = '0';
+    sidebarOverlay.style.visibility = 'hidden';
+    sidebarOverlay.style.pointerEvents = 'none'; // CRITICAL: prevent overlay from blocking main
     document.body.classList.remove('no-scroll');
-    // Remove pointer-events from overlay in case it was left enabled
-    sidebarOverlay.style.pointerEvents = '';
-    // Also ensure main is clickable
+    // Ensure main is clickable
     const main = document.querySelector('main');
     if (main) main.style.pointerEvents = '';
+    // Remove any accidental overlays on pages
+    pages.forEach(page => page.style.pointerEvents = '');
     localStorage.setItem('sidebarPinned', 'true');
 }
 
@@ -222,9 +220,13 @@ function applyUnpinnedState() {
     pinBtn.classList.remove('active');
     pinBtn.style.transform = 'rotate(0)';
     localStorage.setItem('sidebarPinned', 'false');
-    // When unpinned, overlay may be used, so reset pointer-events for main
+    // When unpinned, overlay may be used, so reset pointer-events for main and pages
+    sidebarOverlay.style.pointerEvents = '';
+    sidebarOverlay.style.opacity = '';
+    sidebarOverlay.style.visibility = '';
     const main = document.querySelector('main');
     if (main) main.style.pointerEvents = '';
+    pages.forEach(page => page.style.pointerEvents = '');
 }
 
 // Toggle sidebar
@@ -275,8 +277,14 @@ function navigateToPage() {
     this.classList.add('active');
 
     const pageId = this.getAttribute('data-page');
-    pages.forEach(page => page.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
+    pages.forEach(page => {
+        page.classList.remove('active');
+        // Only the active page is clickable
+        page.style.pointerEvents = 'none';
+    });
+    const activePage = document.getElementById(pageId);
+    activePage.classList.add('active');
+    activePage.style.pointerEvents = '';
 
     if (pageId === 'live-tv') {
         loadLiveStreams();
